@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "946977305237",
+    "firebase_url": "https://compatible-roommate.firebaseio.com",
+    "project_id": "compatible-roommate",
+    "storage_bucket": "compatible-roommate.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:946977305237:android:9271b0ee5960359712219c",
+        "android_client_info": {
+          "package_name": "com.example.compatableroomatesapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "946977305237-aknfrmnfpalfgrc9ak9tggr349qkku7v.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC-D2yk5_iNREKC6x_2_uO73cXAl72BfVQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "946977305237-aknfrmnfpalfgrc9ak9tggr349qkku7v.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
