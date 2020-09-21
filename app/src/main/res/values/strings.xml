@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">Compatable Roomates App</string>
+    <string name="app_name">Compatible Roommates Finder</string>
+    <string name="insert_email">Email</string>
+    <string name="insert_password">Password</string>
+    <string name="insert_name">Name</string>
+    <string name="login_name">Login</string>
+    <string name="register_name">Register</string>
 </resources>
