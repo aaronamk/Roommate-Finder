@@ -5,4 +5,6 @@
     <string name="insert_name">Name</string>
     <string name="login_name">Login</string>
     <string name="register_name">Register</string>
+    <string name="next">Next</string>
+    <string name="insert_personality_type">Personality Type</string>
 </resources>
