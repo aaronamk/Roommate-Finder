@@ -3,6 +3,7 @@ package com.example.compatableroomatesapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Patterns;
 import android.view.View;
@@ -18,7 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth Auth;
-    private EditText editTextPersonName, editTextPassword, editTextEmailAddress;
+    private EditText editTextPersonName, editTextPassword, editTextEmailAddress, editTextGraduation;
     private Button register;
 
     @Override
@@ -34,6 +35,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         editTextPersonName = findViewById(R.id.editTextPersonName);
         editTextPassword = findViewById(R.id.editTextPassword);
         editTextEmailAddress = findViewById(R.id.editTextEmailAddress);
+        editTextGraduation = findViewById(R.id.editTextGraduation);
 
     }
 
@@ -49,6 +51,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
     private void registerUser(){
         final String email = editTextEmailAddress.getText().toString().trim();
         final String name = editTextPersonName.getText().toString().trim();
+        final String gradYear = editTextGraduation.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
         if(name.isEmpty()){
@@ -82,7 +85,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    User user = new User(name,email);
+                    User user = new User(name,email,gradYear);
 
                     FirebaseDatabase.getInstance().getReference("Users")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -90,6 +93,8 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
                                 Toast.makeText(Register.this, "User has been registered!", Toast.LENGTH_LONG).show();
+                                Intent intent = new Intent(Register.this, MainActivity.class); //TODO: Make this go to the activity that starts up the questionnaire.
+                                startActivity(intent);
                             }else {
                                 Toast.makeText(Register.this,"Failed to register! Try again!", Toast.LENGTH_LONG).show();
                             }

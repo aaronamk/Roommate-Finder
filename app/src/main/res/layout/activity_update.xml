@@ -4,13 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Register">
+    tools:context=".Update">
 
     <TextView
         android:id="@+id/title"
-        android:layout_width="412dp"
-        android:layout_height="128dp"
-        android:layout_marginTop="68dp"
+        android:layout_width="413dp"
+        android:layout_height="124dp"
+        android:layout_marginTop="92dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/app_name"
         android:textAlignment="center"
@@ -18,46 +18,17 @@
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.6"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextEmailAddress"
-        android:layout_width="411dp"
-        android:layout_height="74dp"
-        android:ems="10"
-        android:fontFamily="sans-serif-black"
-        android:hint="@string/insert_email"
-        android:inputType="textEmailAddress"
-        android:textColor="#918686"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPersonName" />
-
-    <EditText
-        android:id="@+id/editTextPassword"
-        android:layout_width="407dp"
-        android:layout_height="70dp"
-        android:ems="10"
-        android:fontFamily="sans-serif-black"
-        android:hint="@string/insert_password"
-        android:inputType="textPassword"
-        android:textColor="#918686"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.75"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmailAddress" />
 
     <Button
-        android:id="@+id/registerButton"
+        android:id="@+id/updateButton"
         android:layout_width="285dp"
         android:layout_height="58dp"
         android:fontFamily="sans-serif-black"
-        android:text="@string/register_name"
+        android:text="@string/update_name"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -65,7 +36,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextGraduation"
-        app:layout_constraintVertical_bias="0.194" />
+        app:layout_constraintVertical_bias="0.188" />
 
     <EditText
         android:id="@+id/editTextPersonName"
@@ -79,23 +50,53 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/hint" />
 
     <EditText
         android:id="@+id/editTextGraduation"
-        android:layout_width="408dp"
-        android:layout_height="70dp"
-        android:layout_marginTop="12dp"
+        android:layout_width="407dp"
+        android:layout_height="74dp"
         android:ems="10"
-        android:inputType="date"
         android:hint="@string/insert_graduationYear"
+        android:inputType="date"
         android:textColor="#918686"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextPersonName" />
+
+    <TextView
+        android:id="@+id/hint"
+        android:layout_width="411dp"
+        android:layout_height="41dp"
+        android:layout_marginTop="4dp"
+        android:text="@string/update_hint"
+        android:textAlignment="center"
+        android:textColor="#918686"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="156dp"
+        android:text="@string/logout_name"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.006"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/updateButton"
+        app:layout_constraintVertical_bias="1.0" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
