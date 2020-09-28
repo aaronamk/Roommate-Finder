@@ -77,6 +77,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
 
     private void logoutUser() {
         FirebaseAuth.getInstance().signOut();
+        Toast.makeText(Update.this,"Logout Successful", Toast.LENGTH_LONG).show();
         Intent intent = new Intent(Update.this, MainActivity.class);
         startActivity(intent);
     }
