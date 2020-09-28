@@ -2,9 +2,9 @@ package com.example.compatableroomatesapp;
 
 public class User {
 
-    public String fullName, email, gradYear;
+    public String fullName, email, bio, gradYear;
 
-    public User(){
+    public User() {
 
     }
 
@@ -13,4 +13,6 @@ public class User {
         this.email = email;
         this.gradYear = gradyear;
     }
+
+    public void setBio(String bio) { this.bio = bio; }
 }
