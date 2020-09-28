@@ -99,11 +99,6 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
     private boolean isGradYearChanged() {
         String editYearString = editGradYear.getText().toString();
         if(!fullname.equals(editYearString)){
-            if(editYearString.isEmpty()){
-                editGradYear.setError("Graduation year is required!");
-                editGradYear.requestFocus();
-                return false;
-            }
             reference.child(userID).child("gradYear").setValue(editGradYear.getText().toString().trim());
             return true;
         }else{
