@@ -2,6 +2,7 @@ package com.example.compatableroomatesapp;
 
 public class User {
 
+
     public String fullName, email, bio, gradYear, personality, timeofDay, playingMusic, smoker, friendsVisit, tidy, matchUID;
     public Boolean matched, acceptedMatch;
 
@@ -20,4 +21,6 @@ public class User {
     public void setGradYear (String gradYear) { this.gradYear = gradYear; }
 
     public void setAcceptedMatch (Boolean acceptedMatch) {this.acceptedMatch = acceptedMatch;}
+
+
 }
