@@ -4,15 +4,12 @@ public class User {
 
     public String fullName, email, bio, gradYear;
 
-    public User() {
-
-    }
-
-    public User(String fullName, String email, String gradyear){
+    public User(String fullName, String email) {
         this.fullName = fullName;
         this.email = email;
-        this.gradYear = gradyear;
     }
 
     public void setBio(String bio) { this.bio = bio; }
+
+    public void setGradYear(String gradYear) { this.gradYear = gradYear; }
 }
