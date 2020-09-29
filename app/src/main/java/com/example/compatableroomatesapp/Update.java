@@ -22,7 +22,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID, fullname, gradYear;
-    private Button update, logout;
+    private Button update, logout, back;
     private EditText editFullName, editGradYear;
 
     @Override
@@ -60,6 +60,8 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
         update.setOnClickListener(this);
         logout = findViewById(R.id.logoutButton);
         logout.setOnClickListener(this);
+        back = findViewById(R.id.back_button);
+        back.setOnClickListener(this);
     }
 
     @Override
@@ -71,6 +73,9 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
             case R.id.logoutButton:
                 logoutUser();
                 break;
+            case R.id.back_button:
+                Intent intent = new Intent(Update.this, Profile.class);
+                startActivity(intent);
         }
     }
 
@@ -91,6 +96,8 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
         }
         if(changed){
             Toast.makeText(Update.this, "Profile has been updated!", Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(Update.this, Profile.class);
+            startActivity(intent);
         }else{
             Toast.makeText(Update.this, "Profile is the same and can not be updated!", Toast.LENGTH_LONG).show();
         }
@@ -98,7 +105,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
 
     private boolean isGradYearChanged() {
         String editYearString = editGradYear.getText().toString();
-        if(!fullname.equals(editYearString)){
+        if(!gradYear.equals(editYearString)){
             reference.child(userID).child("gradYear").setValue(editGradYear.getText().toString().trim());
             return true;
         }else{

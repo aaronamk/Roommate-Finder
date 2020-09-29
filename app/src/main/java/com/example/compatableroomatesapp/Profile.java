@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Profile extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth Auth;
-    private Button request;
+    private Button request, logout;
     private ImageButton edit;
 
     @Override
@@ -25,6 +25,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
         edit = findViewById(R.id.editButton);
         edit.setOnClickListener(this);
+
+        logout = findViewById(R.id.logoutButton);
+        logout.setOnClickListener(this);
     }
 
     @Override
@@ -35,7 +38,18 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 Intent intent = new Intent(Profile.this, Update.class);
                 startActivity(intent);
                 break;
+
+            case R.id.logoutButton:
+                logoutUser();
+                break;
         }
+    }
+
+    private void logoutUser() {
+        FirebaseAuth.getInstance().signOut();
+        Toast.makeText(Profile.this,"Logout Successful", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(Profile.this, MainActivity.class);
+        startActivity(intent);
     }
 
 }
