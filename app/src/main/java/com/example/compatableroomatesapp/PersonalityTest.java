@@ -17,7 +17,7 @@ public class PersonalityTest extends AppCompatActivity {
 
         webView = (WebView) findViewById(R.id.personalityTestLink);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://www.16personalities.com/free-personality-test");
+        webView.loadUrl("https://www.truity.com/test/type-finder-personality-test-new");
 
     }
 }
