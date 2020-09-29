@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -57,7 +56,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
                 Toast.makeText(Update.this,"Something went wrong!", Toast.LENGTH_LONG).show();
             }
         });
-        update = findViewById(R.id.updateButton);
+        update = findViewById(R.id.editButton);
         update.setOnClickListener(this);
         logout = findViewById(R.id.logoutButton);
         logout.setOnClickListener(this);
@@ -66,7 +65,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.updateButton:
+            case R.id.editButton:
                 updateUser();
                 break;
             case R.id.logoutButton:

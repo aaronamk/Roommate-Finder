@@ -80,19 +80,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
-                    if(user.isEmailVerified()){
+                    if (user.isEmailVerified()) {
                         Toast.makeText(MainActivity.this,"Login Successful", Toast.LENGTH_LONG).show();
-                        //****go to user profile
-                        Intent intent = new Intent(MainActivity.this, Update.class);
+                        Intent intent = new Intent(MainActivity.this, Profile.class);
                         startActivity(intent);
-                    }else{
+                    } else {
                         user.sendEmailVerification();
                         Toast.makeText(MainActivity.this, "Please check your email and verify your account!", Toast.LENGTH_LONG).show();
                     }
-                }else{
+                } else {
                     Toast.makeText(MainActivity.this,"Failed to login user! Try again!", Toast.LENGTH_LONG).show();
                 }
             }

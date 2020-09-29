@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class Register extends AppCompatActivity implements View.OnClickListener {
@@ -85,20 +86,20 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    User user = new User(name,email, false );
-                    if(!gradYear.isEmpty()){
-                        user.setGradYear(gradYear);
-                    }
+                    User user = new User(name,email, false);
+                    if (!gradYear.isEmpty()) user.setGradYear(gradYear);
 
                     FirebaseDatabase.getInstance().getReference("Users")
                             .child(FirebaseAuth.getInstance().getCurrentUser().getUid()).setValue(user).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(Register.this, "User has been registered!", Toast.LENGTH_LONG).show();
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if (task.isSuccessful()) {
+                                user.sendEmailVerification();
+                                Toast.makeText(Register.this, "User has been registered, check your email for verification!", Toast.LENGTH_LONG).show();
                                 Intent intent = new Intent(Register.this, MainActivity.class); //TODO: Make this go to the activity that starts up the questionnaire.
                                 startActivity(intent);
-                            }else {
+                            } else {
                                 Toast.makeText(Register.this,"Failed to register! Try again!", Toast.LENGTH_LONG).show();
                             }
                         }
