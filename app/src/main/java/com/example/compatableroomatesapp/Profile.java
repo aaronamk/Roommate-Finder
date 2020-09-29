@@ -14,7 +14,8 @@ import com.google.firebase.auth.FirebaseAuth;
 
 public class Profile extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth Auth;
-    private ImageButton request, edit;
+    private Button request;
+    private ImageButton edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
