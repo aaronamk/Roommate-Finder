@@ -3,7 +3,7 @@ package com.example.compatableroomatesapp;
 public class User {
 
 
-    public String fullName, email, bio, gradYear, personality, timeOfDay, playingMusic, isSmoker, friendsVisit, tidy, matchUID;
+    public String fullName, email, bio, gradYear, personality, timeOfDay, playsMusic, isSmoker, isVisited, isTidy, matchUID;
     public Boolean matched, acceptedMatch;
 
     public User() {}
