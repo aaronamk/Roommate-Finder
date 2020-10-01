@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private TextView register;
@@ -41,7 +42,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.register:
-                startActivity(new Intent(this, Register.class));
+                Intent intent = new Intent(MainActivity.this, Register.class);
+                startActivity(intent);
+                //startActivity(new Intent(this, Register.class));
                 break;
 
             case R.id.loginButton:
@@ -77,10 +80,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    //****go to user profile
-                    Toast.makeText(MainActivity.this,"Login Successful", Toast.LENGTH_LONG).show();
-                }else{
+                if (task.isSuccessful()) {
+                    FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+
+                    if (user.isEmailVerified()) {
+                        Toast.makeText(MainActivity.this,"Login Successful", Toast.LENGTH_LONG).show();
+                        Intent intent = new Intent(MainActivity.this, Profile.class);
+                        startActivity(intent);
+                    } else {
+                        user.sendEmailVerification();
+                        Toast.makeText(MainActivity.this, "Please check your email and verify your account!", Toast.LENGTH_LONG).show();
+                    }
+                } else {
                     Toast.makeText(MainActivity.this,"Failed to login user! Try again!", Toast.LENGTH_LONG).show();
                 }
             }
