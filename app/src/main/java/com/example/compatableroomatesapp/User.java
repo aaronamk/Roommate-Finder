@@ -8,10 +8,10 @@ public class User {
 
     public User() {}
 
-    public User(String fullName, String email, Boolean matched){
+    public User(String fullName, String email) {
         this.fullName = fullName;
         this.email = email;
-        this.matched = matched;
+        this.matched = false;
     }
 
     public void setBio(String bio) { this.bio = bio; }
