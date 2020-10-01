@@ -19,4 +19,6 @@ public class User {
     public void setGradYear(String gradYear) { this.gradYear = gradYear; }
 
     public void setAcceptedMatch(Boolean acceptedMatch) { this.acceptedMatch = acceptedMatch; }
+
+    public void setPersonality(String personality) {this.personality = personality; }
 }

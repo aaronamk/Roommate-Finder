@@ -97,7 +97,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
                             if (task.isSuccessful()) {
                                 user.sendEmailVerification();
                                 Toast.makeText(Register.this, "User has been registered, check your email for verification!", Toast.LENGTH_LONG).show();
-                                Intent intent = new Intent(Register.this, MainActivity.class); //TODO: Make this go to the activity that starts up the questionnaire.
+                                Intent intent = new Intent(Register.this, PersonalityTest.class); //TODO: Make this go to the activity that starts up the questionnaire.
                                 startActivity(intent);
                             } else {
                                 Toast.makeText(Register.this,"Failed to register! Try again!", Toast.LENGTH_LONG).show();
