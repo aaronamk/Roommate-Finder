@@ -5,6 +5,8 @@
     <string name="insert_name">Full Name</string>
     <string name="login_name">Login</string>
     <string name="register_name">Register</string>
+    <string name="next">Next</string>
+    <string name="insert_personality_type">Personality Type</string>
     <string name="logout_name">Logout</string>
     <string name="update_name">Update</string>
     <string name="insert_graduationYear">Graduation Year</string>
