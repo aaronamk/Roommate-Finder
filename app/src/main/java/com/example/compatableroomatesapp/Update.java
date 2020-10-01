@@ -67,6 +67,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()){
             case R.id.editButton:
                 updateUser();
+                finish(); // back to profile
                 break;
             case R.id.logoutButton:
                 logoutUser();
@@ -90,7 +91,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
             changed = true;
         }
         if(changed){
-            Toast.makeText(Update.this, "Profile has been updated!", Toast.LENGTH_LONG).show();
+            Toast.makeText(Update.this, "Profile updated!", Toast.LENGTH_LONG).show();
         }else{
             Toast.makeText(Update.this, "Profile is the same and can not be updated!", Toast.LENGTH_LONG).show();
         }
