@@ -17,7 +17,7 @@ public class PersonalityTest extends AppCompatActivity {
 
         webView = (WebView) findViewById(R.id.personalityTestLink);
         webView.setWebViewClient(new WebViewClient());
-        webView.loadUrl("https://www.truity.com/test/type-finder-personality-test-new");
+        webView.loadUrl("https://openpsychometrics.org/tests/OEJTS/1.php");
 
     }
 }
