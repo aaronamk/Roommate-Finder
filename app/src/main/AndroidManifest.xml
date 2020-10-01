@@ -14,7 +14,6 @@
         <activity android:name=".Update"   android:exported="false"/>
         <activity android:name=".Register" android:exported="false"/>
         <activity android:name=".Profile"  android:exported="false"/>
-        <activity android:name=".Register" android:exported="false"/>
         <activity android:name=".PersonalityTest" android:exported="false"/>
         <activity android:name=".MainActivity">
             <intent-filter>
