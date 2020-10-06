@@ -52,6 +52,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = Auth.getCurrentUser();
+        if (currentUser != null) {
+            Intent intent = new Intent(MainActivity.this, Profile.class);
+            startActivity(intent);
+        }
+
+    }
+    @Override
+    public void onBackPressed() {
+        // pass
+    }
+
     private void userLogin(){
         final String email = editTextEmailAddress.getText().toString().trim();
         final String password = editTextPassword.getText().toString().trim();
