@@ -63,6 +63,11 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     }
 
     @Override
+    public void onBackPressed() {
+        // pass
+    }
+
+    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.editButton:

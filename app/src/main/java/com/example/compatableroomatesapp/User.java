@@ -8,10 +8,10 @@ public class User {
 
     public User() {}
 
-    public User(String fullName, String email, Boolean matched){
+    public User(String fullName, String email) {
         this.fullName = fullName;
         this.email = email;
-        this.matched = matched;
+        this.matched = false;
     }
 
     public void setBio(String bio) { this.bio = bio; }
@@ -19,4 +19,6 @@ public class User {
     public void setGradYear(String gradYear) { this.gradYear = gradYear; }
 
     public void setAcceptedMatch(Boolean acceptedMatch) { this.acceptedMatch = acceptedMatch; }
+
+    public void setPersonality(String personality) {this.personality = personality; }
 }
