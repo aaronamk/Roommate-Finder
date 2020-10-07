@@ -17,5 +17,6 @@
     <string name="update_smoker">Are you a smoker?</string>
     <string name="update_friends">Do you like having friends visit your room?</string>
     <string name="update_clean">Do you keep your room clean?</string>
+    <string name="back">BACK</string>
 
 </resources>
