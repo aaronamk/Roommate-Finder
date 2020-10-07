@@ -3,18 +3,22 @@ package com.example.compatableroomatesapp;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
-public class UpdateQuestions extends AppCompatActivity {
+public class UpdateQuestions extends AppCompatActivity implements View.OnClickListener{
 
     SwitchCompat morningSwitch;
     SwitchCompat musicSwitch;
     SwitchCompat smokerSwitch;
     SwitchCompat friendSwitch;
     SwitchCompat cleanSwitch;
+
+    Button nextButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +30,11 @@ public class UpdateQuestions extends AppCompatActivity {
         smokerSwitch = (SwitchCompat) findViewById(R.id.SmokerSwitch);
         friendSwitch = (SwitchCompat) findViewById(R.id.FriendsSwitch);
         cleanSwitch = (SwitchCompat) findViewById(R.id.CleanSwitch);
+
+        nextButton = (Button) findViewById(R.id.nextButton);
+        nextButton.setOnClickListener(this);
+
+
 
         morningSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -89,5 +98,21 @@ public class UpdateQuestions extends AppCompatActivity {
 
             }
         });
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId())
+        {
+            case R.id.nextButton:
+                updatePersonality();
+                break;
+        }
+    }
+
+    private void updatePersonality()
+    {
+        Intent intent = new Intent(UpdateQuestions.this, PersonalityTest.class);
+        startActivity(intent);
     }
 }

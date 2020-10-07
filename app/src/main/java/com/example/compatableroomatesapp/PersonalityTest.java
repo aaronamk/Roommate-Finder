@@ -2,6 +2,7 @@ package com.example.compatableroomatesapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -34,15 +35,14 @@ public class PersonalityTest extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.nextButton:
-                updatePersonality();
+                updateType();
                 break;
         }
     }
 
-    private void updatePersonality()
+    private void updateType()
     {
         final String personalityType = editPersonalityType.getText().toString().trim();
 
@@ -50,6 +50,13 @@ public class PersonalityTest extends AppCompatActivity implements View.OnClickLi
         {
             editPersonalityType.setError("Personality Type is required!");
             editPersonalityType.requestFocus();
+            return;
         }
+
+        Intent intent = new Intent(PersonalityTest.this, Profile.class);
+        startActivity(intent);
     }
+
+
+
 }
