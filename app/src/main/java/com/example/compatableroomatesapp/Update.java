@@ -21,9 +21,9 @@ import com.google.firebase.database.ValueEventListener;
 public class Update extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
     private DatabaseReference reference;
-    private String userID, fullname, gradYear;
-    private Button update, logout;
-    private EditText editFullName, editGradYear;
+    private String userID, fullname, gradYear, Bio;
+    private Button next, logout;
+    private EditText editFullName, editGradYear, editBio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +36,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
 
         editFullName =  findViewById(R.id.editTextPersonName);
         editGradYear =  findViewById(R.id.editTextGraduation);
+        editBio = findViewById(R.id.editTextBio);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -44,9 +45,13 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
                 if(userProfile != null){
                     fullname = userProfile.fullName;
                     gradYear = userProfile.gradYear;
+                    Bio = userProfile.bio;
 
                     editFullName.setText(fullname);
                     editGradYear.setText(gradYear);
+                    editBio.setText(Bio);
+
+
 
                 }
             }
@@ -56,8 +61,8 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
                 Toast.makeText(Update.this,"Something went wrong!", Toast.LENGTH_LONG).show();
             }
         });
-        update = findViewById(R.id.editButton);
-        update.setOnClickListener(this);
+        next = findViewById(R.id.nextButton);
+        next.setOnClickListener(this);
         logout = findViewById(R.id.logoutButton);
         logout.setOnClickListener(this);
     }
@@ -65,9 +70,11 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.editButton:
+            case R.id.nextButton:
                 updateUser();
-                finish(); // back to profile
+                Intent intent = new Intent(Update.this, UpdateQuestions.class);
+                startActivity(intent);
+                //finish();
                 break;
             case R.id.logoutButton:
                 logoutUser();
@@ -90,15 +97,18 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
         if(isGradYearChanged()){
             changed = true;
         }
+        if(isBioChanged()){
+            changed = true;
+        }
         if(changed){
-            Toast.makeText(Update.this, "Profile updated!", Toast.LENGTH_LONG).show();
+            Toast.makeText(Update.this, "Profile updated!", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(Update.this, "Profile is the same and can not be updated!", Toast.LENGTH_LONG).show();
+            Toast.makeText(Update.this, "Profile is the same and can not be updated!", Toast.LENGTH_SHORT).show();
         }
     }
 
     private boolean isGradYearChanged() {
-        String editYearString = editGradYear.getText().toString();
+        String editYearString = editGradYear.getText().toString().trim();
         if(!fullname.equals(editYearString)){
             reference.child(userID).child("gradYear").setValue(editGradYear.getText().toString().trim());
             return true;
@@ -109,7 +119,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
     }
 
     private boolean isNameChanged() {
-        String editNameString = editFullName.getText().toString();
+        String editNameString = editFullName.getText().toString().trim();
         if(!fullname.equals(editNameString)){
             if(editNameString.isEmpty()){
                 editFullName.setError("Full Name is required!");
@@ -122,4 +132,16 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
             return false;
         }
     }
+
+    private boolean isBioChanged() {
+        String editBioString = editBio.getText().toString().trim();
+        if(Bio == null || !Bio.equals(editBioString)){
+            reference.child(userID).child("bio").setValue(editBio.getText().toString().trim());
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
 }

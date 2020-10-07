@@ -27,7 +27,7 @@
         android:textColor="#918686"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/nextButton"
+        app:layout_constraintBottom_toTopOf="@+id/submitButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -35,11 +35,11 @@
         android:importantForAutofill="no" />
 
     <Button
-        android:id="@+id/nextButton"
+        android:id="@+id/submitButton"
         android:layout_width="285dp"
         android:layout_height="58dp"
         android:fontFamily="sans-serif-black"
-        android:text="@string/next"
+        android:text="@string/submit_name"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"

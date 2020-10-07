@@ -8,7 +8,7 @@
     <string name="next">Next</string>
     <string name="insert_personality_type">Personality Type</string>
     <string name="logout_name">Logout</string>
-    <string name="update_name">Update</string>
+    <string name="submit_name">Submit</string>
     <string name="insert_graduationYear">Graduation Year</string>
     <string name="update_hint">Update your profile information below!</string>
     <string name="update_profileTitle">UPDATE PROFILE</string>

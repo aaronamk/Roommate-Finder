@@ -20,10 +20,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.lang.reflect.Array;
 
 public class PersonalityTest extends AppCompatActivity {
-
     private FirebaseUser user;
     private DatabaseReference reference;
     private WebView webView;
@@ -45,8 +43,24 @@ public class PersonalityTest extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl("https://www.personalityperfect.com/test/free-personality-test/");
 
-        personality = (EditText) findViewById(R.id.editPersonalityType);
-        next = (Button) findViewById(R.id.nextButton);
+        personality = findViewById(R.id.editPersonalityType);
+
+        reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                User userProfile = snapshot.getValue(User.class);
+                if(userProfile != null){
+                    personality.setText(userProfile.personality);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(PersonalityTest.this,"Something went wrong!", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        next = findViewById(R.id.submitButton);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,6 +75,8 @@ public class PersonalityTest extends AppCompatActivity {
                             User userProfile = snapshot.getValue(User.class);
                             if(userProfile != null){
                                 reference.child(userID).child("personality").setValue(result);
+                                Intent intent = new Intent(PersonalityTest.this, Profile.class);
+                                startActivity(intent);
                             }
                         }
 
@@ -73,8 +89,10 @@ public class PersonalityTest extends AppCompatActivity {
             }
         });
 
-        Intent intent = new Intent(PersonalityTest.this, Profile.class);
-        startActivity(intent);
+    }
 
+    @Override
+    public void onBackPressed() {
+        // pass
     }
 }

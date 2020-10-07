@@ -86,7 +86,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if(task.isSuccessful()){
-                    User user = new User(name,email);
+                    User user = new User(name,email,"no","no", "no", "no", "no");
                     if (!gradYear.isEmpty()) user.setGradYear(gradYear);
 
                     FirebaseDatabase.getInstance().getReference("Users")

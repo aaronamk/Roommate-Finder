@@ -24,25 +24,26 @@
 
 
     <Button
-        android:id="@+id/editButton"
+        android:id="@+id/nextButton"
         android:layout_width="285dp"
         android:layout_height="58dp"
+        android:layout_marginBottom="48dp"
         android:fontFamily="sans-serif-black"
-        android:text="@string/update_name"
+        android:text="@string/next"
         android:textColor="#FFFFFF"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextGraduation"
-        app:layout_constraintVertical_bias="0.188" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextBio"
+        app:layout_constraintVertical_bias="0.913" />
 
     <EditText
         android:id="@+id/editTextPersonName"
         android:layout_width="409dp"
         android:layout_height="74dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="@string/insert_name"
         android:inputType="textPersonName"
@@ -92,6 +93,25 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextBio"
+        android:layout_width="408dp"
+        android:layout_height="196dp"
+        android:layout_marginTop="4dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Bio"
+        android:inputType="textMultiLine"
+        android:lines="4"
+        android:maxLength="100"
+        android:textColor="#918686"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextGraduation" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
