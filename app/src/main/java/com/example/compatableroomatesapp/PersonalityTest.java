@@ -3,6 +3,7 @@ package com.example.compatableroomatesapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebView;
@@ -22,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.lang.reflect.Array;
 
 public class PersonalityTest extends AppCompatActivity {
+
     private FirebaseUser user;
     private DatabaseReference reference;
     private WebView webView;
@@ -43,8 +45,8 @@ public class PersonalityTest extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl("https://www.personalityperfect.com/test/free-personality-test/");
 
-        personality = findViewById(R.id.editPersonalityType);
-        next = findViewById(R.id.nextButton);
+        personality = (EditText) findViewById(R.id.editPersonalityType);
+        next = (Button) findViewById(R.id.nextButton);
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +72,9 @@ public class PersonalityTest extends AppCompatActivity {
                 }
             }
         });
+
+        Intent intent = new Intent(PersonalityTest.this, Profile.class);
+        startActivity(intent);
 
     }
 }

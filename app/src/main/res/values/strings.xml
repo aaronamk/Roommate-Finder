@@ -12,5 +12,11 @@
     <string name="insert_graduationYear">Graduation Year</string>
     <string name="update_hint">Update your profile information below!</string>
     <string name="update_profileTitle">UPDATE PROFILE</string>
+    <string name="update_morning">Are you a morning person?</string>
+    <string name="update_music">Do you like to play music while studying?</string>
+    <string name="update_smoker">Are you a smoker?</string>
+    <string name="update_friends">Do you like having friends visit your room?</string>
+    <string name="update_clean">Do you keep your room clean?</string>
+    <string name="back">BACK</string>
 
 </resources>
