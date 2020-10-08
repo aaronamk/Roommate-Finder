@@ -18,6 +18,7 @@ public class User {
         this.isVisited = isVisited;
         this.isSmoker = isSmoker;
         this.isTidy = isTidy;
+        this.matchUID = "";
     }
 
     public void setBio(String bio) { this.bio = bio; }
