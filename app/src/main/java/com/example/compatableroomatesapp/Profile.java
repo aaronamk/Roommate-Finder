@@ -30,6 +30,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Profile extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
     private DatabaseReference reference;
@@ -39,7 +42,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private ImageButton edit;
     private ImageView profile;
     private StorageReference storageReference;
-
+    private List<User> userList;
     private String userID, matchID;
 
     @Override
@@ -58,6 +61,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         image = findViewById(R.id.imageButton);
         image.setOnClickListener(this);
         profile = findViewById(R.id.profile_pic);
+
+        userList = new ArrayList<>();
 
         match = findViewById(R.id.matchButton);
         match.setOnClickListener(this);
@@ -112,23 +117,29 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 startActivityForResult(select_image, 246);
                 break;
             case R.id.matchButton:
+                System.out.println("MATCHING");
                 matcher();
         }
     }
 
     private void matcher() {
         reference.child(userID).child("matched").setValue(true);
-        Intent intent1 = new Intent(Profile.this, User.class);
-        startActivity(intent1);
+        //Intent intent1 = new Intent(Profile.this, User.class);
+        //startActivity(intent1);
 
         //ABOVE THIS WORKS
         FirebaseDatabase.getInstance().getReference().child("Users")
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
-                        for (DataSnapshot snap : snapshot.getChildren()) {
-                            User potential_match = snap.getValue(User.class);
-                            Toast.makeText(Profile.this,""+snap.getKey(), Toast.LENGTH_LONG).show();
+                        if(snapshot.exists()){
+                            userList.clear();
+                            for (DataSnapshot snap : snapshot.getChildren()) {
+                                User potential_match = snap.getValue(User.class);
+                                //***THIS ARRAY HOLDS ALL OF THE USER INSTANCES THAT ARE IN THE DATABASE***
+                                userList.add(potential_match);
+                                //Toast.makeText(Profile.this,""+snap.getKey(), Toast.LENGTH_LONG).show();
+                            }
                         }
                     }
                     @Override
@@ -136,6 +147,12 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(Profile.this,"Something went wrong!", Toast.LENGTH_LONG).show();
                     }
                 });
+
+        //***THIS PRINTS OUT THE NAMES OF ALL THE PEOPLE IN THE LIST YOU CAN RANDOMLY CHOOSE ONE OR WHATEVER YOU WANT TO DO AND GET ALL OF THE ATTRIBUTES OUT OF THAT PERSON.***
+        for (int counter = 0; counter < userList.size(); counter++) {
+            System.out.println(userList.get(counter).fullName);
+            System.out.println(counter);
+        }
 
         //NEW THING I WANT TO TRY OUT
         /*public void onDataChange(DataSnapshot snapshot) {
