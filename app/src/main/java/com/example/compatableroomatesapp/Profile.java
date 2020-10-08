@@ -73,11 +73,12 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
                     // quick facts
                     String facts = "";
-                    facts.concat(userProfile.morningPerson ? "Early bird" : "");
-                    facts.concat(userProfile.playsMusic ? "Plays Music out loud" : "");
-                    facts.concat(userProfile.isVisited ? "Has visitors" : "lozer");
-                    facts.concat(userProfile.isSmoker ? "Smoker" : "Non-smoker");
-                    facts.concat(userProfile.isTidy? "tidy" : "messy");
+                    facts = facts.concat(userProfile.morningPerson ? "Early bird\n" : "");
+                    facts = facts.concat(userProfile.playsMusic ? "Plays Music out loud\n" : "");
+                    facts = facts.concat(userProfile.isVisited ? "Has visitors\n" : "lozer\n");
+                    facts = facts.concat(userProfile.isSmoker ? "Smoker\n" : "Non-smoker\n");
+                    facts = facts.concat(userProfile.isTidy? "tidy\n" : "messy\n");
+                    quickFacts.setText(facts);
                 }
                 if(user.getPhotoUrl() != null ){
                     Glide.with(Profile.this).load(user.getPhotoUrl()).into(profile);
