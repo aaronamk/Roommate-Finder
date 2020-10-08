@@ -1,15 +1,21 @@
 package com.example.compatableroomatesapp;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
@@ -17,21 +23,31 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 public class Update extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID, fullname, gradYear, Bio;
-    private Button next, logout;
+    private Button next, logout, image;
     private EditText editFullName, editGradYear, editBio;
+    private ImageView profile;
+    private StorageReference storageReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_update);
 
+        image = findViewById(R.id.image2Button);
+        image.setOnClickListener(this);
+        profile = findViewById(R.id.imageView);
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
+        storageReference = FirebaseStorage.getInstance().getReference();
         userID = user.getUid();
 
         editFullName =  findViewById(R.id.editTextPersonName);
@@ -78,6 +94,11 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.logoutButton:
                 logoutUser();
+                break;
+            case R.id.image2Button:
+                Intent select_image = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                select_image.setType("image/*");
+                startActivityForResult(select_image, 246);
                 break;
         }
     }
@@ -143,5 +164,39 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
         }
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 246 && resultCode == RESULT_OK && data != null){
+            Uri imageUri = data.getData();
+            profile.setImageURI(imageUri);
+            uploadImage(imageUri);
+        }
+    }
+
+    private void uploadImage(Uri imageUri) {
+        final StorageReference file = storageReference.child("profileImage").child(userID+".jpg");
+        file.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                getDownloadUri(file);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Update.this, "Failed image upload.", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
+
+    private void getDownloadUri(StorageReference file) {
+        file.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+            @Override
+            public void onSuccess(Uri uri) {
+                Toast.makeText(Update.this, "Uploaded image.", Toast.LENGTH_LONG).show();
+                //setUserProfileImage(uri);
+            }
+        });
+    }
 
 }

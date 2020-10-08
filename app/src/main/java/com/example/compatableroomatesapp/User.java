@@ -1,10 +1,13 @@
 package com.example.compatableroomatesapp;
 
+import android.net.Uri;
+
 public class User {
 
 
     public String fullName, email, bio, gradYear, personality, morningPerson, playsMusic, isSmoker, isVisited, isTidy, matchUID;
     public Boolean matched, acceptedMatch;
+    public Uri pImage;
 
     public User() {}
 
@@ -26,4 +29,6 @@ public class User {
     public void setAcceptedMatch(Boolean acceptedMatch) { this.acceptedMatch = acceptedMatch; }
 
     public void setPersonality(String personality) {this.personality = personality; }
+
+    public void setProfileImage(Uri file) {this.pImage = file; }
 }

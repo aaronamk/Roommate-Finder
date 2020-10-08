@@ -6,22 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".Update">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="413dp"
-        android:layout_height="124dp"
-        android:layout_marginTop="92dp"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/app_name"
-        android:textAlignment="center"
-        android:textColor="#918686"
-        android:textSize="40sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
 
     <Button
         android:id="@+id/nextButton"
@@ -73,15 +57,17 @@
         android:id="@+id/hint"
         android:layout_width="411dp"
         android:layout_height="41dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/update_hint"
         android:textAlignment="center"
         android:textColor="#918686"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextPersonName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/image2Button" />
 
     <Button
         android:id="@+id/logoutButton"
@@ -112,6 +98,30 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextGraduation" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="138dp"
+        android:layout_marginTop="21dp"
+        android:layout_marginEnd="145dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <Button
+        android:id="@+id/image2Button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="162dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="161dp"
+        android:text="Select Image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
