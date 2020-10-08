@@ -14,10 +14,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -69,6 +71,9 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
 
 
 
+                }
+                if(user.getPhotoUrl() != null ){
+                    Glide.with(Update.this).load(user.getPhotoUrl()).into(profile);
                 }
             }
 
@@ -193,8 +198,23 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
         file.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
             @Override
             public void onSuccess(Uri uri) {
-                Toast.makeText(Update.this, "Uploaded image.", Toast.LENGTH_LONG).show();
-                //setUserProfileImage(uri);
+                Toast.makeText(Update.this, "Uploading image.", Toast.LENGTH_LONG).show();
+                setUserProfileImage(uri);
+            }
+        });
+    }
+
+    private void setUserProfileImage(Uri uri) {
+        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder().setPhotoUri(uri).build();
+        user.updateProfile(request).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Toast.makeText(Update.this, "Uploaded successful.", Toast.LENGTH_LONG).show();
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(Update.this, "Uploaded failed.", Toast.LENGTH_LONG).show();
             }
         });
     }
