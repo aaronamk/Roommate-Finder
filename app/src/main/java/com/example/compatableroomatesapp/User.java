@@ -4,12 +4,12 @@ package com.example.compatableroomatesapp;
 public class User {
 
 
-    public String fullName, email, bio, gradYear, personality, morningPerson, playsMusic, isSmoker, isVisited, isTidy, matchUID;
-    public Boolean matched, acceptedMatch;
+    public String fullName, email, bio, gradYear, personality, matchUID;
+    public boolean matched, acceptedMatch, morningPerson, playsMusic, isSmoker, isVisited, isTidy;
 
     public User() {}
 
-    public User(String fullName, String email, String morningPerson, String playsMusic, String isSmoker, String isVisited, String isTidy) {
+    public User(String fullName, String email, boolean morningPerson, boolean playsMusic, boolean isSmoker, boolean isVisited, boolean isTidy) {
         this.fullName = fullName;
         this.email = email;
         this.matched = false;

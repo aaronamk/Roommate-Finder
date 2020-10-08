@@ -34,7 +34,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
     private DatabaseReference reference;
 
-    private TextView fullName, personality, bio;
+    private TextView fullName, personality, bio, quickFacts;
     private Button request, logout, image;
     private ImageButton edit;
     private ImageView profile;
@@ -53,6 +53,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         fullName = findViewById(R.id.fullName);
         personality = findViewById(R.id.personality);
         bio = findViewById(R.id.bio);
+        quickFacts = findViewById(R.id.quick_facts);
         image = findViewById(R.id.imageButton);
         image.setOnClickListener(this);
         profile = findViewById(R.id.profile_pic);
@@ -69,6 +70,14 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     fullName.setText(userProfile.fullName);
                     personality.setText(userProfile.personality);
                     bio.setText(userProfile.bio);
+
+                    // quick facts
+                    String facts = "";
+                    facts.concat(userProfile.morningPerson ? "Early bird" : "");
+                    facts.concat(userProfile.playsMusic ? "Plays Music out loud" : "");
+                    facts.concat(userProfile.isVisited ? "Has visitors" : "lozer");
+                    facts.concat(userProfile.isSmoker ? "Smoker" : "Non-smoker");
+                    facts.concat(userProfile.isTidy? "tidy" : "messy");
                 }
                 if(user.getPhotoUrl() != null ){
                     Glide.with(Profile.this).load(user.getPhotoUrl()).into(profile);
