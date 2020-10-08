@@ -106,9 +106,13 @@
         android:id="@+id/matchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="90dp"
         android:text="Find a Match"
-        tools:layout_editor_absoluteX="164dp"
-        tools:layout_editor_absoluteY="453dp" />
+        app:layout_constraintEnd_toStartOf="@+id/editButton"
+        app:layout_constraintStart_toEndOf="@+id/profile_pic"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/quick_facts"

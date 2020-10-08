@@ -180,7 +180,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void uploadImage(Uri imageUri) {
-        final StorageReference file = storageReference.child("profileImage").child(user.getEmail()+".jpeg");
+        final StorageReference file = storageReference.child("profileImage").child(user.getUid()+".jpeg");
         file.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

@@ -128,72 +128,55 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 startActivityForResult(select_image, 246);
                 break;
             case R.id.matchButton:
-                System.out.println("MATCHING");
+                //**** IF ELSE STATEMENT, IF ALREADY HAVE A MATCH SHOW MATCH AND SHOW ACCEPT/REJECT BUTTONS
+                // IF THERE IS NO MATCH THEN USE THE MATCHER METHOD AND THEN DO THE SHOW MATCH AND SHOW ACCEPT/REJECT BUTTONS
                 matcher();
         }
     }
 
     private void matcher() {
-        if (reference.child(userID).child("acceptedMatch").equals(false)) {
-            reference.child(userID).child("matched").setValue(true);
+        reference.child(userID).child("matched").setValue(true);
 
-            FirebaseDatabase.getInstance().getReference().child("Users")
-                    .orderByChild("matched").equalTo(false)
-                    .addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(DataSnapshot snapshot) {
-                            if (snapshot.exists()) {
-                                userList.clear();
-                                for (DataSnapshot snap : snapshot.getChildren()) {
-                                    User potential_match = snap.getValue(User.class);
-                                    //***THIS ARRAY HOLDS ALL OF THE USER INSTANCES THAT ARE IN THE DATABASE***
-                                    userList.add(potential_match);
-                                }
-                                matching_output_and_result();
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(DatabaseError databaseError) {
-                            Toast.makeText(Profile.this, "Something went wrong!", Toast.LENGTH_LONG).show();
-                        }
-                    });
-        }
-    }
-
-    private void matching_output_and_result() {
-        String email = "";
-        if (userList.size() != 0){
-            Random i = new Random();
-            int index = i.nextInt(userList.size());
-            email = userList.get(index).email;
-            reference.child(userID).child("matchUID").setValue(email);
-        }
-        else{
-            reference.child(userID).child("matched").setValue(false);
-        }
-        userList.clear();
-        set_matched_person_values(email);
-    }
-
-    private void set_matched_person_values(String email) {
         FirebaseDatabase.getInstance().getReference().child("Users")
-                .orderByChild("email").equalTo(email)
+                .orderByChild("matched").equalTo(false)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
                         if (snapshot.exists()) {
+                            userList.clear();
                             for (DataSnapshot snap : snapshot.getChildren()) {
-                                snap.child("matched").getRef().setValue(true);
-                                snap.child("matchUID").getRef().setValue(user.getEmail());
+                                User potential_match = snap.getValue(User.class);
+                                userList.add(potential_match);
                             }
+                            matching_output_and_result();
                         }
                     }
+
                     @Override
                     public void onCancelled(DatabaseError databaseError) {
                         Toast.makeText(Profile.this, "Something went wrong!", Toast.LENGTH_LONG).show();
                     }
                 });
+    }
+
+    private void matching_output_and_result() {
+        String partnerUID = "";
+        if (userList.size() != 0){
+            Random i = new Random();
+            int index = i.nextInt(userList.size());
+            partnerUID = userList.get(index).UID;
+            reference.child(userID).child("matchUID").setValue(partnerUID);
+        }
+        else{
+            reference.child(userID).child("matched").setValue(false);
+        }
+        userList.clear();
+        set_matched_person_values(partnerUID);
+    }
+
+    private void set_matched_person_values(String partnerUID) {
+        reference.child(partnerUID).child("matched").setValue(true);
+        reference.child(partnerUID).child("matchUID").setValue(userID);
     }
 
     @Override
@@ -207,7 +190,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void uploadImage(Uri imageUri) {
-        final StorageReference file = storageReference.child("profileImage").child(user.getEmail()+".jpeg");
+        final StorageReference file = storageReference.child("profileImage").child(user.getUid()+".jpeg");
         file.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
