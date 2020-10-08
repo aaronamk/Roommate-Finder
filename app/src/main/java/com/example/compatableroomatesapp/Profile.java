@@ -32,6 +32,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Profile extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
@@ -43,7 +44,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private ImageView profile;
     private StorageReference storageReference;
     private List<User> userList;
-    private String userID, matchID;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,11 +125,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     private void matcher() {
         reference.child(userID).child("matched").setValue(true);
-        //Intent intent1 = new Intent(Profile.this, User.class);
-        //startActivity(intent1);
 
-        //ABOVE THIS WORKS
         FirebaseDatabase.getInstance().getReference().child("Users")
+                .orderByChild("matched").equalTo(false)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot snapshot) {
@@ -138,8 +137,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                                 User potential_match = snap.getValue(User.class);
                                 //***THIS ARRAY HOLDS ALL OF THE USER INSTANCES THAT ARE IN THE DATABASE***
                                 userList.add(potential_match);
-                                //Toast.makeText(Profile.this,""+snap.getKey(), Toast.LENGTH_LONG).show();
                             }
+                            matching_output_and_result();
                         }
                     }
                     @Override
@@ -147,69 +146,20 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(Profile.this,"Something went wrong!", Toast.LENGTH_LONG).show();
                     }
                 });
+    }
 
-        //***THIS PRINTS OUT THE NAMES OF ALL THE PEOPLE IN THE LIST YOU CAN RANDOMLY CHOOSE ONE OR WHATEVER YOU WANT TO DO AND GET ALL OF THE ATTRIBUTES OUT OF THAT PERSON.***
-        for (int counter = 0; counter < userList.size(); counter++) {
-            System.out.println(userList.get(counter).fullName);
-            System.out.println(counter);
+    private void matching_output_and_result() {
+        if (userList.size() != 0){
+            Random i = new Random();
+            int index = i.nextInt(userList.size());
+            System.out.println(userList.get(index).fullName);
+            System.out.println(userList.get(index).email);
+            reference.child(userID).child("matchUID").setValue(userList.get(index).email);
         }
-
-        //NEW THING I WANT TO TRY OUT
-        /*public void onDataChange(DataSnapshot snapshot) {
-            Iterator<DataSnapshot> items = snapshot.getChildren().iterator();
-            int counter = 0;
-            while (items.hasNext()) {
-                DataSnapshot item = items.next();
-                Log.i("Result", "email" + item.child("email").getValue().toString());
-                Log.i("Result", "User ID" + item.child("userId").getValue().toString());
-                Log.i("Result", "User Name" + item.child("username").getValue().toString());
-            }
-        }*/
-
-
-
-
-
-
-       // reference.orderByChild("matched").equalTo(false).limitToFirst(1).addValueEventListener(new ValueEventListener() {
-          //  @Override
-          //  public void onDataChange(@NonNull DataSnapshot matchedUser) {
-                //User userProfile = matchedUser.getValue(User.class);
-                //matchID = matchedUser.getKey();
-
-                /*reference.child(matchID).child("matchedUID").setValue(userID);
-                reference.child(matchID).child("matched").setValue(true);
-                reference.child(userID).child("matchUID").setValue(matchID);
-                Intent intent = new Intent(Profile.this, User.class);
-                startActivity(intent);*/
-            //    Toast.makeText(Profile.this,"Testing HERE IS THE KEY"+matchID, Toast.LENGTH_LONG).show();
-           // }
-
-          //  @Override
-          //  public void onCancelled(@NonNull DatabaseError error) {
-          //      Toast.makeText(Profile.this,"Something went wrong!", Toast.LENGTH_LONG).show();
-         //   }
-
-        //});
-
-
-
-        /*reference.child(userID).addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot snap) {
-                User userProfile = snap.getValue(User.class);
-                if(userProfile.matchUID == null){
-                    reference.child(userID).child("matched").setValue(false);
-                    Intent intent3 = new Intent(Profile.this, User.class);
-                    startActivity(intent3);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Profile.this,"Something went wrong!", Toast.LENGTH_LONG).show();
-            }
-        });*/
+        else{
+            reference.child(userID).child("matched").setValue(false);
+        }
+        userList.clear();
     }
 
     @Override
@@ -223,7 +173,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void uploadImage(Uri imageUri) {
-        final StorageReference file = storageReference.child("profileImage").child(user.getUid()+".jpeg");
+        final StorageReference file = storageReference.child("profileImage").child(user.getEmail()+".jpeg");
         file.putFile(imageUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
