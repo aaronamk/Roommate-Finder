@@ -109,4 +109,12 @@
         android:text="Find a Match"
         tools:layout_editor_absoluteX="164dp"
         tools:layout_editor_absoluteY="453dp" />
+
+    <TextView
+        android:id="@+id/quick_facts"
+        android:layout_width="364dp"
+        android:layout_height="175dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/request" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
