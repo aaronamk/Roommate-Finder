@@ -101,4 +101,13 @@
         android:text="Select Profile Image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_pic" />
+
+    <TextView
+        android:id="@+id/facts"
+        android:layout_width="364dp"
+        android:layout_height="175dp"
+        android:text="TextView"
+        tools:layout_editor_absoluteX="26dp"
+        tools:layout_editor_absoluteY="451dp" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
