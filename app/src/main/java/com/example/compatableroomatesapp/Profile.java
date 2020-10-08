@@ -124,42 +124,66 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void matcher() {
-        reference.child(userID).child("matched").setValue(true);
+        if (reference.child(userID).child("acceptedMatch").equals(false)) {
+            reference.child(userID).child("matched").setValue(true);
 
-        FirebaseDatabase.getInstance().getReference().child("Users")
-                .orderByChild("matched").equalTo(false)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        if(snapshot.exists()){
-                            userList.clear();
-                            for (DataSnapshot snap : snapshot.getChildren()) {
-                                User potential_match = snap.getValue(User.class);
-                                //***THIS ARRAY HOLDS ALL OF THE USER INSTANCES THAT ARE IN THE DATABASE***
-                                userList.add(potential_match);
+            FirebaseDatabase.getInstance().getReference().child("Users")
+                    .orderByChild("matched").equalTo(false)
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                userList.clear();
+                                for (DataSnapshot snap : snapshot.getChildren()) {
+                                    User potential_match = snap.getValue(User.class);
+                                    //***THIS ARRAY HOLDS ALL OF THE USER INSTANCES THAT ARE IN THE DATABASE***
+                                    userList.add(potential_match);
+                                }
+                                matching_output_and_result();
                             }
-                            matching_output_and_result();
                         }
-                    }
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(Profile.this,"Something went wrong!", Toast.LENGTH_LONG).show();
-                    }
-                });
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+                            Toast.makeText(Profile.this, "Something went wrong!", Toast.LENGTH_LONG).show();
+                        }
+                    });
+        }
     }
 
     private void matching_output_and_result() {
+        String email = "";
         if (userList.size() != 0){
             Random i = new Random();
             int index = i.nextInt(userList.size());
-            System.out.println(userList.get(index).fullName);
-            System.out.println(userList.get(index).email);
-            reference.child(userID).child("matchUID").setValue(userList.get(index).email);
+            email = userList.get(index).email;
+            reference.child(userID).child("matchUID").setValue(email);
         }
         else{
             reference.child(userID).child("matched").setValue(false);
         }
         userList.clear();
+        set_matched_person_values(email);
+    }
+
+    private void set_matched_person_values(String email) {
+        FirebaseDatabase.getInstance().getReference().child("Users")
+                .orderByChild("email").equalTo(email)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot snap : snapshot.getChildren()) {
+                                snap.child("matched").getRef().setValue(true);
+                                snap.child("matchUID").getRef().setValue(user.getEmail());
+                            }
+                        }
+                    }
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(Profile.this, "Something went wrong!", Toast.LENGTH_LONG).show();
+                    }
+                });
     }
 
     @Override
