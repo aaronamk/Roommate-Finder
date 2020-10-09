@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Button;
@@ -40,6 +41,8 @@ public class PersonalityTest extends AppCompatActivity {
         userID = user.getUid();
 
         webView = (WebView) findViewById(R.id.personalityTestLink);
+        WebSettings webSettings = webView.getSettings();
+        webSettings.setJavaScriptEnabled(false);
         webView.setWebViewClient(new WebViewClient());
         webView.loadUrl("https://www.personalityperfect.com/test/free-personality-test/");
 

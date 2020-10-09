@@ -155,6 +155,7 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
                     reference.child(userID).child("isSmoker").setValue(isSmoker);
                     reference.child(userID).child("isVisited").setValue(isVisited);
                     reference.child(userID).child("isTidy").setValue(isTidy);
+                    reference.child(userID).child("UID").setValue(userID);
                 }
             }
 

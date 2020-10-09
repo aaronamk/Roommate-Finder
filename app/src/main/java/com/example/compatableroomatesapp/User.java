@@ -4,7 +4,7 @@ package com.example.compatableroomatesapp;
 public class User {
 
 
-    public String fullName, email, bio, gradYear, personality, matchUID;
+    public String fullName, email, bio, gradYear, personality, matchUID, UID;
     public boolean matched, acceptedMatch, morningPerson, playsMusic, isSmoker, isVisited, isTidy;
 
     public User() {}
@@ -13,11 +13,13 @@ public class User {
         this.fullName = fullName;
         this.email = email;
         this.matched = false;
+        this.acceptedMatch = false;
         this.morningPerson = morningPerson;
         this.playsMusic = playsMusic;
         this.isVisited = isVisited;
         this.isSmoker = isSmoker;
         this.isTidy = isTidy;
+        this.matchUID = "";
     }
 
     public void setBio(String bio) { this.bio = bio; }
