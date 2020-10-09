@@ -128,9 +128,33 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 startActivityForResult(select_image, 246);
                 break;
             case R.id.matchButton:
-                Intent otherProf = new Intent(Profile.this, Match.class);
-                otherProf.putExtra("profileUserID", "PDBwjQyIFrYE58HGkfwipDWmIdI2");
-                startActivity(otherProf);
+                //matcher();
+                reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User userProfile = snapshot.getValue(User.class);
+                        if (userProfile != null) {
+                            if (userProfile.matched){
+                                Intent otherProf = new Intent(Profile.this, Match.class);
+                                otherProf.putExtra("profileUserID", userProfile.matchUID);
+                                startActivity(otherProf);
+                            }
+                            else {
+                                matcher();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(Profile.this,"Something went wrong!", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+
+                //Intent otherProf = new Intent(Profile.this, Match.class);
+                //otherProf.putExtra("profileUserID", "PDBwjQyIFrYE58HGkfwipDWmIdI2");
+                //startActivity(otherProf);
                 //**** IF ELSE STATEMENT, IF ALREADY HAVE A MATCH SHOW MATCH AND SHOW ACCEPT/REJECT BUTTONS
                 // IF THERE IS NO MATCH THEN USE THE MATCHER METHOD AND THEN DO THE SHOW MATCH AND SHOW ACCEPT/REJECT BUTTONS
                 //matcher();

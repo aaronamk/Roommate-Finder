@@ -72,8 +72,7 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = user.getUid();
 
-        reference.child(profileUserID);
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+        reference.child(profileUserID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
