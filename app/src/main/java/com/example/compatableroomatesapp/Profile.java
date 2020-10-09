@@ -53,6 +53,8 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
         findViewById(R.id.rejectButton).setVisibility(View.GONE);
         findViewById(R.id.acceptButton).setVisibility(View.GONE);
+        findViewById(R.id.emailTextView).setVisibility(View.GONE);
+        findViewById(R.id.backMatchButton).setVisibility(View.GONE);
 
         // add visual elements
         edit = findViewById(R.id.editButton);
