@@ -18,6 +18,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.regex.*;
+
 public class Register extends AppCompatActivity implements View.OnClickListener {
     private FirebaseAuth Auth;
     private EditText editTextPersonName, editTextPassword, editTextEmailAddress, editTextGraduation;
@@ -80,8 +82,23 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
             editTextPassword.requestFocus();
             return;
         }
-        if (password.length() < 6) {
-            editTextPassword.setError("Password should be greater than 6 characters!");
+        if (password.length() < 8) {
+            editTextPassword.setError("Password should be at least 8 characters");
+            editTextPassword.requestFocus();
+            return;
+        }
+        if (!password.matches(".*\\D.*\\D.*")) {
+            editTextPassword.setError("Password should contain at least 2 letters");
+            editTextPassword.requestFocus();
+            return;
+        }
+        if (!password.matches(".*\\d.*\\d.*")) {
+            editTextPassword.setError("Password should contain at least 2 numbers");
+            editTextPassword.requestFocus();
+            return;
+        }
+        if (!password.matches(".*[A-Z].*")) {
+            editTextPassword.setError("Password should contain at least 1 capital letter");
             editTextPassword.requestFocus();
             return;
         }
