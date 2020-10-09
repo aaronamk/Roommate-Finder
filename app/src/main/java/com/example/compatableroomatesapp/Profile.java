@@ -190,12 +190,12 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
             int index = i.nextInt(userList.size());
             partnerUID = userList.get(index).UID;
             reference.child(userID).child("matchUID").setValue(partnerUID);
+            set_matched_person_values(partnerUID);
         }
         else{
             reference.child(userID).child("matched").setValue(false);
         }
         userList.clear();
-        set_matched_person_values(partnerUID);
     }
 
     private void set_matched_person_values(String partnerUID) {
