@@ -53,12 +53,12 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
-                if(userProfile != null){
-                    if(userProfile.morningPerson) morningSwitch.toggle();
-                    if(userProfile.playsMusic) musicSwitch.toggle();
-                    if(userProfile.isSmoker) smokerSwitch.toggle();
-                    if(userProfile.isVisited) friendSwitch.toggle();
-                    if(userProfile.isTidy) cleanSwitch.toggle();
+                if (userProfile != null) {
+                    if (userProfile.morningPerson) morningSwitch.toggle();
+                    if (userProfile.playsMusic) musicSwitch.toggle();
+                    if (userProfile.isSmoker) smokerSwitch.toggle();
+                    if (userProfile.isVisited) friendSwitch.toggle();
+                    if (userProfile.isTidy) cleanSwitch.toggle();
                 }
             }
 
@@ -75,60 +75,60 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
         morningSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            morningPerson = isChecked;
-            if (isChecked) {
-                Toast.makeText(getApplicationContext(), "You are a morning person", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "You are not a morning person", Toast.LENGTH_SHORT).show();
-            }
+                morningPerson = isChecked;
+                if (isChecked) {
+                    Toast.makeText(getApplicationContext(), "You are a morning person", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "You are not a morning person", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         musicSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            playsMusic = isChecked;
-            if (isChecked) {
-                Toast.makeText(getApplicationContext(), "You like to play music", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "You do not like to play music", Toast.LENGTH_SHORT).show();
-            }
+                playsMusic = isChecked;
+                if (isChecked) {
+                    Toast.makeText(getApplicationContext(), "You like to play music", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "You do not like to play music", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         smokerSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            isSmoker = isChecked;
-            if (isChecked) {
-                Toast.makeText(getApplicationContext(), "You are a smoker", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "You are not a smoker", Toast.LENGTH_SHORT).show();
-            }
+                isSmoker = isChecked;
+                if (isChecked) {
+                    Toast.makeText(getApplicationContext(), "You are a smoker", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "You are not a smoker", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         friendSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            isVisited = isChecked;
-            if (isChecked) {
-                Toast.makeText(getApplicationContext(), "You like to have friends over", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "You do not like to have friends over", Toast.LENGTH_SHORT).show();
-            }
+                isVisited = isChecked;
+                if (isChecked) {
+                    Toast.makeText(getApplicationContext(), "You like to have friends over", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "You do not like to have friends over", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
         cleanSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            isTidy = isChecked;
-            if (isChecked) {
-                Toast.makeText(getApplicationContext(), "You keep your room clean", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getApplicationContext(), "You do not keep your room clean", Toast.LENGTH_SHORT).show();
-            }
+                isTidy = isChecked;
+                if (isChecked) {
+                    Toast.makeText(getApplicationContext(), "You keep your room clean", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getApplicationContext(), "You do not keep your room clean", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
