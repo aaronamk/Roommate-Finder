@@ -21,17 +21,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UpdateQuestions extends AppCompatActivity implements View.OnClickListener{
 
-    SwitchCompat morningSwitch;
-    SwitchCompat musicSwitch;
-    SwitchCompat smokerSwitch;
-    SwitchCompat friendSwitch;
-    SwitchCompat cleanSwitch;
-
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
     private boolean morningPerson, playsMusic, isSmoker, isVisited, isTidy;
 
+    private SwitchCompat morningSwitch, musicSwitch, smokerSwitch, friendSwitch, cleanSwitch;
     Button nextButton;
 
     @Override
@@ -43,22 +38,22 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
 
-        morningSwitch = (SwitchCompat) findViewById(R.id.MorningSwitch);
-        musicSwitch = (SwitchCompat) findViewById(R.id.MusicSwitch);
-        smokerSwitch = (SwitchCompat) findViewById(R.id.SmokerSwitch);
-        friendSwitch = (SwitchCompat) findViewById(R.id.FriendsSwitch);
-        cleanSwitch = (SwitchCompat) findViewById(R.id.CleanSwitch);
+        morningSwitch = findViewById(R.id.MorningSwitch);
+        musicSwitch = findViewById(R.id.MusicSwitch);
+        smokerSwitch = findViewById(R.id.SmokerSwitch);
+        friendSwitch = findViewById(R.id.FriendsSwitch);
+        cleanSwitch = findViewById(R.id.CleanSwitch);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
-                if(userProfile != null){
-                    if(userProfile.morningPerson) morningSwitch.toggle();
-                    if(userProfile.playsMusic) musicSwitch.toggle();
-                    if(userProfile.isSmoker) smokerSwitch.toggle();
-                    if(userProfile.isVisited) friendSwitch.toggle();
-                    if(userProfile.isTidy) cleanSwitch.toggle();
+                if (userProfile != null) {
+                    if (userProfile.morningPerson) morningSwitch.toggle();
+                    if (userProfile.playsMusic) musicSwitch.toggle();
+                    if (userProfile.isSmoker) smokerSwitch.toggle();
+                    if (userProfile.isVisited) friendSwitch.toggle();
+                    if (userProfile.isTidy) cleanSwitch.toggle();
                 }
             }
 
@@ -154,7 +149,7 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
-                if(userProfile != null){
+                if (userProfile != null) {
                     reference.child(userID).child("morningPerson").setValue(morningPerson);
                     reference.child(userID).child("playsMusic").setValue(playsMusic);
                     reference.child(userID).child("isSmoker").setValue(isSmoker);
@@ -170,8 +165,7 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
         });
     }
 
-    private void updatePersonality()
-    {
+    private void updatePersonality() {
         Intent intent = new Intent(UpdateQuestions.this, PersonalityTest.class);
         startActivity(intent);
     }

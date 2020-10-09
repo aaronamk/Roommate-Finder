@@ -32,7 +32,7 @@ import com.google.firebase.storage.UploadTask;
 public class Update extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
     private DatabaseReference reference;
-    private String userID, fullname, gradYear, Bio;
+    private String userID, fullName, gradYear, Bio;
     private Button next, logout, image;
     private EditText editFullName, editGradYear, editBio;
     private ImageView profile;
@@ -61,11 +61,11 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
                 if(userProfile != null){
-                    fullname = userProfile.fullName;
+                    fullName = userProfile.fullName;
                     gradYear = userProfile.gradYear;
                     Bio = userProfile.bio;
 
-                    editFullName.setText(fullname);
+                    editFullName.setText(fullName);
                     editGradYear.setText(gradYear);
                     editBio.setText(Bio);
 
@@ -135,7 +135,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
 
     private boolean isGradYearChanged() {
         String editYearString = editGradYear.getText().toString().trim();
-        if(!fullname.equals(editYearString)){
+        if(!fullName.equals(editYearString)){
             reference.child(userID).child("gradYear").setValue(editGradYear.getText().toString().trim());
             return true;
         }else{
@@ -146,7 +146,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
 
     private boolean isNameChanged() {
         String editNameString = editFullName.getText().toString().trim();
-        if(!fullname.equals(editNameString)){
+        if(!fullName.equals(editNameString)){
             if(editNameString.isEmpty()){
                 editFullName.setError("Full Name is required!");
                 editFullName.requestFocus();
