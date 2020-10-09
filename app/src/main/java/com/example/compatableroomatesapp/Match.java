@@ -3,7 +3,6 @@ package com.example.compatableroomatesapp;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -32,7 +31,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Match extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
@@ -108,7 +106,18 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                     if (userProfile.acceptedMatch && userAcceptedMatch){
                         fullName.setText(userProfile.fullName);
                         emailView.setText(userProfile.email);
-                        //add photo to this as well
+                        storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Glide.with(Match.this).load(uri).into(profile);
+                                }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(Match.this, "Match does not have a profile image", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+
                     }
                     personality.setText(userProfile.personality);
                     bio.setText(userProfile.bio);
@@ -121,10 +130,6 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                     facts = facts.concat(userProfile.isSmoker ? "Smoker\n" : "Non-smoker\n");
                     facts = facts.concat(userProfile.isTidy ? "tidy\n" : "messy\n");
                     quickFacts.setText(facts);
-                }
-                if (user.getPhotoUrl() != null) {
-                    Glide.with(Match.this).load(user.getPhotoUrl()).into(profile);
-                    //TODO: make this draw the other user's profile pic... somehow. maybe store the url in the user profile class?
                 }
             }
 
