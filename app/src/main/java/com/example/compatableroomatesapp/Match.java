@@ -39,7 +39,7 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
     private DatabaseReference reference;
 
     private TextView fullName, personality, bio, quickFacts;
-    private Button logout;
+    private Button logout, accept, reject;
     private ImageView profile;
     private StorageReference storageReference;
     private String userID, profileUserID;
@@ -54,6 +54,9 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
         findViewById(R.id.matchButton).setVisibility(View.GONE);
         findViewById(R.id.imageButton).setVisibility(View.GONE);
 
+        findViewById(R.id.acceptButton).setVisibility(View.VISIBLE);
+        findViewById(R.id.rejectButton).setVisibility(View.VISIBLE);
+
         // add visual elements
         logout = findViewById(R.id.logoutButton);
         logout.setOnClickListener(this);
@@ -62,6 +65,11 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
         bio = findViewById(R.id.bio);
         quickFacts = findViewById(R.id.quick_facts);
         profile = findViewById(R.id.profile_pic);
+
+        accept = findViewById(R.id.acceptButton);
+        accept.setOnClickListener(this);
+        reject = findViewById(R.id.rejectButton);
+        reject.setOnClickListener(this);
 
         // update profile based on UID from intent
         profileUserID = this.getIntent().getStringExtra("profileUserID");
@@ -108,6 +116,30 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
         switch (v.getId()) {
             case R.id.logoutButton:
                 logoutUser();
+                break;
+            case R.id.acceptButton:
+                //handle case where match is accepted or not
+                reference.child(userID).child("acceptedMatch").setValue(true);
+                break;
+            case R.id.rejectButton:
+                //handle case where match is rejected
+                //Go back to the profile thing as this will no longer show anything
+                reference.child(userID).child("matched").setValue(false);
+                reference.child(userID).child("matchUID").setValue("");
+                reference.child(userID).child("acceptedMatch").setValue(false);
+
+                reference.child(profileUserID).child("matched").setValue(false);
+                reference.child(profileUserID).child("matchUID").setValue("");
+                reference.child(profileUserID).child("acceptedMatch").setValue(false);
+
+                findViewById(R.id.editButton).setVisibility(View.VISIBLE);
+                findViewById(R.id.matchButton).setVisibility(View.VISIBLE);
+                findViewById(R.id.imageButton).setVisibility(View.VISIBLE);
+                findViewById(R.id.rejectButton).setVisibility(View.GONE);
+                findViewById(R.id.acceptButton).setVisibility(View.GONE);
+
+                Intent otherProf = new Intent(Match.this, Profile.class);
+                startActivity(otherProf);
                 break;
         }
     }
