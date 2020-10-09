@@ -68,8 +68,8 @@ public class PersonalityTest extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 final String result = personality.getText().toString().trim();
-                if(!result.isEmpty()){
-                    if(result.length() != 4){
+                if (!result.isEmpty()) {
+                    if (result.length() != 4) {
                         Toast.makeText(PersonalityTest.this,"Please insert a valid personality test result!", Toast.LENGTH_LONG).show();
                     }
                     reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
@@ -78,7 +78,8 @@ public class PersonalityTest extends AppCompatActivity {
                             User userProfile = snapshot.getValue(User.class);
                             if(userProfile != null){
                                 reference.child(userID).child("personality").setValue(result);
-                                Intent intent = new Intent(PersonalityTest.this, Profile.class);
+                                logoutUser();
+                                Intent intent = new Intent(PersonalityTest.this, MainActivity.class);
                                 startActivity(intent);
                             }
                         }
@@ -92,6 +93,13 @@ public class PersonalityTest extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void logoutUser() {
+        FirebaseAuth.getInstance().signOut();
+        Toast.makeText(PersonalityTest.this,"Logged out", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(PersonalityTest.this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
