@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 
-public class PersonalityTest extends AppCompatActivity {
+public class PersonalityTest extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
     private DatabaseReference reference;
     private WebView webView;
@@ -39,6 +39,9 @@ public class PersonalityTest extends AppCompatActivity {
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
+
+        next = findViewById(R.id.submitButton);
+        next.setOnClickListener(this);
 
         webView = (WebView) findViewById(R.id.personalityTestLink);
         WebSettings webSettings = webView.getSettings();
@@ -61,41 +64,60 @@ public class PersonalityTest extends AppCompatActivity {
                 Toast.makeText(PersonalityTest.this,"Something went wrong!", Toast.LENGTH_LONG).show();
             }
         });
+    }
 
-
-        next = findViewById(R.id.submitButton);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String result = personality.getText().toString().trim();
-                if(!result.isEmpty()){
-                    if(result.length() != 4){
-                        Toast.makeText(PersonalityTest.this,"Please insert a valid personality test result!", Toast.LENGTH_LONG).show();
-                    }
-                    reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            User userProfile = snapshot.getValue(User.class);
-                            if(userProfile != null){
-                                reference.child(userID).child("personality").setValue(result);
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.submitButton:
+                final String result = personality.getText().toString().trim().toUpperCase();
+                // check for a valid personality type
+                if (!result.matches("[EI][SN][TF][JP]")) {
+                    Toast.makeText(PersonalityTest.this,"Please insert a valid personality test result", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User userProfile = snapshot.getValue(User.class);
+                        if (userProfile != null) {
+                            reference.child(userID).child("personality").setValue(result);
+                            if (user.isEmailVerified()) {
                                 Intent intent = new Intent(PersonalityTest.this, Profile.class);
+                                startActivity(intent);
+                            } else {
+                                // don't allow unverified users to access their account
+                                Toast.makeText(PersonalityTest.this,"Please check your email and verify your account!", Toast.LENGTH_LONG).show();
+                                logoutUser();
+                                Intent intent = new Intent(PersonalityTest.this, MainActivity.class);
                                 startActivity(intent);
                             }
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-                            Toast.makeText(PersonalityTest.this,"Something went wrong!", Toast.LENGTH_LONG).show();
-                        }
-                    });
-                }
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(PersonalityTest.this,"Something went wrong!", Toast.LENGTH_LONG).show();
+                    }
+                });
+                break;
+        }
+    }
 
+    private void logoutUser() {
+        FirebaseAuth.getInstance().signOut();
+        Toast.makeText(PersonalityTest.this,"Logged out", Toast.LENGTH_LONG).show();
+        Intent intent = new Intent(PersonalityTest.this, MainActivity.class);
+        startActivity(intent);
     }
 
     @Override
     public void onBackPressed() {
         // pass
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+
     }
 }

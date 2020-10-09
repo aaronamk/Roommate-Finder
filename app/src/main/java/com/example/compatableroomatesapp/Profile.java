@@ -51,6 +51,11 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
+        findViewById(R.id.rejectButton).setVisibility(View.GONE);
+        findViewById(R.id.acceptButton).setVisibility(View.GONE);
+        findViewById(R.id.emailTextView).setVisibility(View.GONE);
+        findViewById(R.id.backMatchButton).setVisibility(View.GONE);
+
         // add visual elements
         edit = findViewById(R.id.editButton);
         edit.setOnClickListener(this);
@@ -80,7 +85,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
-                if(userProfile != null) {
+                if (userProfile != null) {
                     fullName.setText(userProfile.fullName);
                     personality.setText(userProfile.personality);
                     bio.setText(userProfile.bio);
@@ -89,12 +94,12 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     String facts = "";
                     facts = facts.concat(userProfile.morningPerson ? "Early bird\n" : "");
                     facts = facts.concat(userProfile.playsMusic ? "Plays Music out loud\n" : "");
-                    facts = facts.concat(userProfile.isVisited ? "Has visitors\n" : "lozer\n");
+                    facts = facts.concat(userProfile.isVisited ? "Has visitors\n" : "Does not have visitors\n");
                     facts = facts.concat(userProfile.isSmoker ? "Smoker\n" : "Non-smoker\n");
                     facts = facts.concat(userProfile.isTidy? "tidy\n" : "messy\n");
                     quickFacts.setText(facts);
                 }
-                if(user.getPhotoUrl() != null ){
+                if (user.getPhotoUrl() != null) {
                     Glide.with(Profile.this).load(user.getPhotoUrl()).into(profile);
                 }
             }
@@ -128,9 +133,28 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 startActivityForResult(select_image, 246);
                 break;
             case R.id.matchButton:
-                //**** IF ELSE STATEMENT, IF ALREADY HAVE A MATCH SHOW MATCH AND SHOW ACCEPT/REJECT BUTTONS
-                // IF THERE IS NO MATCH THEN USE THE MATCHER METHOD AND THEN DO THE SHOW MATCH AND SHOW ACCEPT/REJECT BUTTONS
-                matcher();
+                //matcher();
+                reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        User userProfile = snapshot.getValue(User.class);
+                        if (userProfile != null) {
+                            if (userProfile.matched){
+                                Intent otherProf = new Intent(Profile.this, Match.class);
+                                otherProf.putExtra("profileUserID", userProfile.matchUID);
+                                startActivity(otherProf);
+                            }
+                            else {
+                                matcher();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(Profile.this,"Something went wrong!", Toast.LENGTH_LONG).show();
+                    }
+                });
         }
     }
 
