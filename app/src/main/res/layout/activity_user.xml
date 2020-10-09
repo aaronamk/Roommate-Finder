@@ -62,17 +62,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/personality" />
 
-    <Button
-        android:id="@+id/request"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Send/Accept Request"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bio" />
-
     <ImageButton
         android:id="@+id/editButton"
         android:layout_width="46dp"
@@ -118,7 +107,36 @@
         android:id="@+id/quick_facts"
         android:layout_width="364dp"
         android:layout_height="175dp"
+        android:layout_marginTop="10dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/request" />
+        app:layout_constraintTop_toBottomOf="@+id/acceptButton" />
+
+    <Button
+        android:id="@+id/acceptButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="31dp"
+        android:layout_marginBottom="10dp"
+        android:text="Accept Match"
+        app:layout_constraintBottom_toTopOf="@+id/quick_facts"
+        app:layout_constraintEnd_toStartOf="@+id/rejectButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bio" />
+
+    <Button
+        android:id="@+id/rejectButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="31dp"
+        android:layout_marginTop="14dp"
+        android:layout_marginEnd="75dp"
+        android:layout_marginBottom="10dp"
+        android:text="Reject Match"
+        app:layout_constraintBottom_toTopOf="@+id/quick_facts"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/acceptButton"
+        app:layout_constraintTop_toBottomOf="@+id/bio" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

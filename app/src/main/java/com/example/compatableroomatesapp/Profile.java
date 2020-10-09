@@ -51,6 +51,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
+        findViewById(R.id.rejectButton).setVisibility(View.GONE);
+        findViewById(R.id.acceptButton).setVisibility(View.GONE);
+
         // add visual elements
         edit = findViewById(R.id.editButton);
         edit.setOnClickListener(this);
@@ -150,14 +153,6 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(Profile.this,"Something went wrong!", Toast.LENGTH_LONG).show();
                     }
                 });
-
-
-                //Intent otherProf = new Intent(Profile.this, Match.class);
-                //otherProf.putExtra("profileUserID", "PDBwjQyIFrYE58HGkfwipDWmIdI2");
-                //startActivity(otherProf);
-                //**** IF ELSE STATEMENT, IF ALREADY HAVE A MATCH SHOW MATCH AND SHOW ACCEPT/REJECT BUTTONS
-                // IF THERE IS NO MATCH THEN USE THE MATCHER METHOD AND THEN DO THE SHOW MATCH AND SHOW ACCEPT/REJECT BUTTONS
-                //matcher();
         }
     }
 
