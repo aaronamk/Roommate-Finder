@@ -30,15 +30,21 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 public class Profile extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
     private DatabaseReference reference;
 
     private TextView fullName, personality, bio, quickFacts;
-    private Button request, logout, image;
+    private Button request, logout, image, match;
     private ImageButton edit;
     private ImageView profile;
     private StorageReference storageReference;
+    private List<User> userList;
+    private String userID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +64,18 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         image.setOnClickListener(this);
         profile = findViewById(R.id.profile_pic);
 
+        userList = new ArrayList<>();
+
+        match = findViewById(R.id.matchButton);
+        match.setOnClickListener(this);
+
         // update profile based on firebase user data
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         storageReference = FirebaseStorage.getInstance().getReference();
+
+        userID = user.getUid();
+
         reference.child(user.getUid()).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -113,7 +127,56 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 select_image.setType("image/*");
                 startActivityForResult(select_image, 246);
                 break;
+            case R.id.matchButton:
+                //**** IF ELSE STATEMENT, IF ALREADY HAVE A MATCH SHOW MATCH AND SHOW ACCEPT/REJECT BUTTONS
+                // IF THERE IS NO MATCH THEN USE THE MATCHER METHOD AND THEN DO THE SHOW MATCH AND SHOW ACCEPT/REJECT BUTTONS
+                matcher();
         }
+    }
+
+    private void matcher() {
+        reference.child(userID).child("matched").setValue(true);
+
+        FirebaseDatabase.getInstance().getReference().child("Users")
+                .orderByChild("matched").equalTo(false)
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            userList.clear();
+                            for (DataSnapshot snap : snapshot.getChildren()) {
+                                User potential_match = snap.getValue(User.class);
+                                userList.add(potential_match);
+                            }
+                            matching_output_and_result();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Toast.makeText(Profile.this, "Something went wrong!", Toast.LENGTH_LONG).show();
+                    }
+                });
+    }
+
+    private void matching_output_and_result() {
+        String partnerUID = "";
+        if (userList.size() != 0){
+            Random i = new Random();
+            int index = i.nextInt(userList.size());
+            partnerUID = userList.get(index).UID;
+            reference.child(userID).child("matchUID").setValue(partnerUID);
+        }
+        else{
+            reference.child(userID).child("matched").setValue(false);
+        }
+        userList.clear();
+        set_matched_person_values(partnerUID);
+    }
+
+    private void set_matched_person_values(String partnerUID) {
+        reference.child(partnerUID).child("matched").setValue(true);
+        reference.child(partnerUID).child("matchUID").setValue(userID);
     }
 
     @Override
