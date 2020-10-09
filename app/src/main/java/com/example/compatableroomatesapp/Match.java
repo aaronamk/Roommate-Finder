@@ -5,7 +5,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,10 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class Match extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
@@ -66,7 +61,6 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
         bio = findViewById(R.id.bio);
         quickFacts = findViewById(R.id.quick_facts);
         profile = findViewById(R.id.profile_pic);
-
         accept = findViewById(R.id.acceptButton);
         accept.setOnClickListener(this);
         reject = findViewById(R.id.rejectButton);
@@ -157,7 +151,17 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                             if (userProfile.acceptedMatch && userAcceptedMatch) {
                                 fullName.setText(userProfile.fullName);
                                 emailView.setText(userProfile.email);
-                                //add photo to this as well
+                                storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Glide.with(Match.this).load(uri).into(profile);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(Match.this, "Match does not have a profile image", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
                     }
@@ -200,31 +204,6 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                 startActivity(backProf);
                 break;
         }
-    }
-
-    private void getDownloadUri(StorageReference file) {
-        file.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Toast.makeText(Match.this, "Uploading image.", Toast.LENGTH_LONG).show();
-                setUserProfileImage(uri);
-            }
-        });
-    }
-
-    private void setUserProfileImage(Uri uri) {
-        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder().setPhotoUri(uri).build();
-        user.updateProfile(request).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(Match.this, "Uploaded successful.", Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Match.this, "Uploaded failed.", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     private void logoutUser() {
