@@ -68,11 +68,8 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
                     editFullName.setText(fullName);
                     editGradYear.setText(gradYear);
                     editBio.setText(Bio);
-
-
-
                 }
-                if(user.getPhotoUrl() != null ){
+                if(user.getPhotoUrl() != null){
                     Glide.with(Update.this).load(user.getPhotoUrl()).into(profile);
                 }
             }
