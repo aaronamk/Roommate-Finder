@@ -49,34 +49,38 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         }
     }
 
-    private void registerUser(){
+    private void registerUser() {
         final String email = editTextEmailAddress.getText().toString().trim();
         final String name = editTextPersonName.getText().toString().trim();
         final String gradYear = editTextGraduation.getText().toString().trim();
         String password = editTextPassword.getText().toString().trim();
 
-        if(name.isEmpty()){
+        if (name.isEmpty()) {
             editTextPersonName.setError("Full Name is required!");
             editTextPersonName.requestFocus();
             return;
         }
-        if(email.isEmpty()){
+        if (email.isEmpty()) {
             editTextEmailAddress.setError("Email is required!");
             editTextEmailAddress.requestFocus();
             return;
         }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editTextEmailAddress.setError("Email is not Valid!");
             editTextEmailAddress.requestFocus();
             return;
         }
-        if(password.isEmpty()){
+        if (email.length() < 7 || !email.substring(email.length() - 6).equals("wm.edu")) {
+            editTextEmailAddress.setError("Must use your W&M email address");
+            editTextEmailAddress.requestFocus();
+            return;
+        }
+        if (password.isEmpty()) {
             editTextPassword.setError("Password is required!");
             editTextPassword.requestFocus();
             return;
         }
-
-        if(password.length() < 6){
+        if (password.length() < 6) {
             editTextPassword.setError("Password should be greater than 6 characters!");
             editTextPassword.requestFocus();
             return;
@@ -85,7 +89,7 @@ public class Register extends AppCompatActivity implements View.OnClickListener 
         Auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
                     User user = new User(name,email,false,false, false, false, false);
                     if (!gradYear.isEmpty()) user.setGradYear(gradYear);
 
