@@ -170,6 +170,7 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(Match.this, "Something went wrong!", Toast.LENGTH_LONG).show();
                     }
                 });
+                Toast.makeText(Match.this, "Success! When match accepts you back, you will see more info.", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rejectButton:
                 reference.child(userID).child("matched").setValue(false);

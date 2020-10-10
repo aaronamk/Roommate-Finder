@@ -133,13 +133,12 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                 startActivityForResult(select_image, 246);
                 break;
             case R.id.matchButton:
-                //matcher();
                 reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         User userProfile = snapshot.getValue(User.class);
                         if (userProfile != null) {
-                            if (userProfile.matched){
+                            if (userProfile.matched) {
                                 Intent otherProf = new Intent(Profile.this, Match.class);
                                 otherProf.putExtra("profileUserID", userProfile.matchUID);
                                 startActivity(otherProf);
@@ -159,9 +158,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     }
 
     private void matcher() {
-        reference.child(userID).child("matched").setValue(true);
-
-        FirebaseDatabase.getInstance().getReference().child("Users")
+          FirebaseDatabase.getInstance().getReference().child("Users")
                 .orderByChild("matched").equalTo(false)
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -185,11 +182,15 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     private void matching_output_and_result() {
         String partnerUID = "";
-        if (userList.size() != 0){
-            Random i = new Random();
-            int index = i.nextInt(userList.size());
-            partnerUID = userList.get(index).UID;
+        if (userList.size() > 1){
+            do {
+                Random i = new Random();
+                int index = i.nextInt(userList.size());
+                partnerUID = userList.get(index).UID;
+            }
+            while (partnerUID.equals(userID));
             reference.child(userID).child("matchUID").setValue(partnerUID);
+            reference.child(userID).child("matched").setValue(true);
             set_matched_person_values(partnerUID);
         }
         else{
