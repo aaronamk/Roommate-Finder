@@ -43,7 +43,7 @@ public class PersonalityTest extends AppCompatActivity implements View.OnClickLi
         next = findViewById(R.id.submitButton);
         next.setOnClickListener(this);
 
-        webView = (WebView) findViewById(R.id.personalityTestLink);
+        webView = findViewById(R.id.personalityTestLink);
         WebSettings webSettings = webView.getSettings();
         webSettings.setJavaScriptEnabled(false);
         webView.setWebViewClient(new WebViewClient());

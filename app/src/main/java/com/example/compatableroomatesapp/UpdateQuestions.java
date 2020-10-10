@@ -43,11 +43,11 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
 
-        morningSwitch = (SwitchCompat) findViewById(R.id.MorningSwitch);
-        musicSwitch = (SwitchCompat) findViewById(R.id.MusicSwitch);
-        smokerSwitch = (SwitchCompat) findViewById(R.id.SmokerSwitch);
-        friendSwitch = (SwitchCompat) findViewById(R.id.FriendsSwitch);
-        cleanSwitch = (SwitchCompat) findViewById(R.id.CleanSwitch);
+        morningSwitch = findViewById(R.id.MorningSwitch);
+        musicSwitch = findViewById(R.id.MusicSwitch);
+        smokerSwitch = findViewById(R.id.SmokerSwitch);
+        friendSwitch = findViewById(R.id.FriendsSwitch);
+        cleanSwitch = findViewById(R.id.CleanSwitch);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -68,7 +68,7 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        nextButton = (Button) findViewById(R.id.nextButton);
+        nextButton = findViewById(R.id.nextButton);
         nextButton.setOnClickListener(this);
 
 

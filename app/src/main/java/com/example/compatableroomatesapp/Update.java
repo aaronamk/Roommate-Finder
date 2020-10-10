@@ -69,8 +69,6 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
                     editGradYear.setText(gradYear);
                     editBio.setText(Bio);
 
-
-
                 }
                 if(user.getPhotoUrl() != null ){
                     Glide.with(Update.this).load(user.getPhotoUrl()).into(profile);
@@ -95,7 +93,6 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
                 updateUser();
                 Intent intent = new Intent(Update.this, UpdateQuestions.class);
                 startActivity(intent);
-                //finish();
                 break;
             case R.id.logoutButton:
                 logoutUser();
