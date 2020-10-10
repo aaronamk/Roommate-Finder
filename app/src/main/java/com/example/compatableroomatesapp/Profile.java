@@ -38,7 +38,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
     private DatabaseReference reference;
 
-    private TextView fullName, personality, bio, quickFacts;
+    private TextView fullName, personality, bio, quickFacts, graduation;
     private Button request, logout, image, match;
     private ImageButton edit;
     private ImageView profile;
@@ -64,6 +64,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         fullName = findViewById(R.id.fullName);
         personality = findViewById(R.id.personality);
         bio = findViewById(R.id.bio);
+        graduation = findViewById(R.id.graduation);
         quickFacts = findViewById(R.id.quick_facts);
         image = findViewById(R.id.imageButton);
         image.setOnClickListener(this);
@@ -89,6 +90,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     fullName.setText(userProfile.fullName);
                     personality.setText(userProfile.personality);
                     bio.setText(userProfile.bio);
+                    graduation.setText(userProfile.gradYear);
 
                     // quick facts
                     String facts = "";
@@ -162,36 +164,36 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         reference.child(userID).child("matched").setValue(true);
 
         FirebaseDatabase.getInstance().getReference().child("Users")
-                .orderByChild("matched").equalTo(false)
-                .addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot snapshot) {
-                        if (snapshot.exists()) {
-                            userList.clear();
-                            for (DataSnapshot snap : snapshot.getChildren()) {
-                                User potential_match = snap.getValue(User.class);
-                                userList.add(potential_match);
-                            }
-                            matching_output_and_result();
-                        }
+                                      .orderByChild("matched").equalTo(false)
+                                      .addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    userList.clear();
+                    for (DataSnapshot snap : snapshot.getChildren()) {
+                        User potential_match = snap.getValue(User.class);
+                        userList.add(potential_match);
                     }
+                    matching_output_and_result();
+                }
+            }
 
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        Toast.makeText(Profile.this, "Something went wrong!", Toast.LENGTH_LONG).show();
-                    }
-                });
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Toast.makeText(Profile.this, "Something went wrong!", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void matching_output_and_result() {
         String partnerUID = "";
-        if (userList.size() != 0){
+        if (userList.size() != 0) {
             Random i = new Random();
             int index = i.nextInt(userList.size());
             partnerUID = userList.get(index).UID;
             reference.child(userID).child("matchUID").setValue(partnerUID);
         }
-        else{
+        else {
             reference.child(userID).child("matched").setValue(false);
         }
         userList.clear();
@@ -204,9 +206,9 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 246 && resultCode == RESULT_OK && data != null){
+        if (requestCode == 246 && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
             profile.setImageURI(imageUri);
             uploadImage(imageUri);

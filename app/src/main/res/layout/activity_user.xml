@@ -25,10 +25,23 @@
 
     <TextView
         android:id="@+id/personality"
-        android:layout_width="239dp"
-        android:layout_height="52dp"
+        android:layout_width="116dp"
+        android:layout_height="42dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="sans-serif-black"
+        android:textAlignment="center"
+        android:textColor="#918686"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/profile_pic"
+        app:layout_constraintTop_toBottomOf="@+id/fullName" />
+
+    <TextView
+        android:id="@+id/graduation"
+        android:layout_width="116dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:fontFamily="sans-serif-black"
         android:textAlignment="center"
@@ -36,8 +49,6 @@
         android:textSize="40sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/profile_pic"
         app:layout_constraintTop_toBottomOf="@+id/fullName" />
 
     <ImageView
@@ -85,8 +96,8 @@
         android:id="@+id/imageButton"
         android:layout_width="98dp"
         android:layout_height="83dp"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="19dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:text="Select Profile Image"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/profile_pic" />
@@ -95,60 +106,47 @@
         android:id="@+id/matchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="90dp"
         android:text="Find a Match"
-        app:layout_constraintEnd_toStartOf="@+id/editButton"
         app:layout_constraintStart_toEndOf="@+id/profile_pic"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/quick_facts"
-        android:layout_width="364dp"
-        android:layout_height="175dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="24dp"
+        android:layout_width="198dp"
+        android:layout_height="177dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/acceptButton" />
+        app:layout_constraintTop_toBottomOf="@+id/bio" />
 
     <Button
         android:id="@+id/acceptButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="31dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:text="Accept Match"
-        app:layout_constraintBottom_toTopOf="@+id/quick_facts"
-        app:layout_constraintEnd_toStartOf="@+id/rejectButton"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/bio" />
 
     <Button
         android:id="@+id/rejectButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="31dp"
-        android:layout_marginTop="14dp"
-        android:layout_marginEnd="75dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:text="Reject Match"
-        app:layout_constraintBottom_toTopOf="@+id/quick_facts"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/acceptButton"
-        app:layout_constraintTop_toBottomOf="@+id/bio"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/acceptButton" />
 
     <TextView
         android:id="@+id/emailTextView"
         android:layout_width="256dp"
         android:layout_height="47dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="15dp"
-        android:layout_marginBottom="9dp"
-        app:layout_constraintBottom_toTopOf="@+id/bio"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/personality" />
 

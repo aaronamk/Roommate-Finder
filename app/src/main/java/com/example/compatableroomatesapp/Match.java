@@ -38,7 +38,7 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
     private DatabaseReference reference;
 
-    private TextView fullName, personality, bio, quickFacts, emailView, back;
+    private TextView fullName, personality, bio, quickFacts, emailView, back, graduation;
     private Button logout, accept, reject;
     private ImageView profile;
     private StorageReference storageReference;
@@ -66,6 +66,7 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
         fullName = findViewById(R.id.fullName);
         personality = findViewById(R.id.personality);
         bio = findViewById(R.id.bio);
+        graduation = findViewById(R.id.graduation);
         quickFacts = findViewById(R.id.quick_facts);
         profile = findViewById(R.id.profile_pic);
 
@@ -108,6 +109,7 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                     if (userProfile.acceptedMatch && userAcceptedMatch){
                         fullName.setText(userProfile.fullName);
                         emailView.setText(userProfile.email);
+                        graduation.setText(userProfile.gradYear);
                         //add photo to this as well
                     }
                     personality.setText(userProfile.personality);
