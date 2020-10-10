@@ -102,7 +102,8 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                         fullName.setText(userProfile.fullName);
                         emailView.setText(userProfile.email);
                         graduation.setText(userProfile.gradYear);
-                        //add photo to this as well
+                        findViewById(R.id.acceptButton).setVisibility(View.GONE);
+                        Toast.makeText(Match.this, "Success! Email your new roommate!", Toast.LENGTH_LONG).show();
                         storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl()
                                         .addOnSuccessListener(new OnSuccessListener<Uri>() {
                             @Override
@@ -151,6 +152,7 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         User userProfile = snapshot.getValue(User.class);
                         if (userProfile != null && userProfile.acceptedMatch && userAcceptedMatch) {
+                            Toast.makeText(Match.this, "Success! Email your new roommate!", Toast.LENGTH_LONG).show();
                             fullName.setText(userProfile.fullName);
                             emailView.setText(userProfile.email);
                             storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
