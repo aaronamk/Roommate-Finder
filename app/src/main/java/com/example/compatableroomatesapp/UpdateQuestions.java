@@ -21,17 +21,12 @@ import com.google.firebase.database.ValueEventListener;
 
 public class UpdateQuestions extends AppCompatActivity implements View.OnClickListener{
 
-    SwitchCompat morningSwitch;
-    SwitchCompat musicSwitch;
-    SwitchCompat smokerSwitch;
-    SwitchCompat friendSwitch;
-    SwitchCompat cleanSwitch;
-
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
     private boolean morningPerson, playsMusic, isSmoker, isVisited, isTidy;
 
+    private SwitchCompat morningSwitch, musicSwitch, smokerSwitch, friendSwitch, cleanSwitch;
     Button nextButton;
 
     @Override
@@ -129,7 +124,7 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
-                if(userProfile != null){
+                if (userProfile != null) {
                     reference.child(userID).child("morningPerson").setValue(morningPerson);
                     reference.child(userID).child("playsMusic").setValue(playsMusic);
                     reference.child(userID).child("isSmoker").setValue(isSmoker);
@@ -146,8 +141,7 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
         });
     }
 
-    private void updatePersonality()
-    {
+    private void updatePersonality() {
         Intent intent = new Intent(UpdateQuestions.this, PersonalityTest.class);
         startActivity(intent);
     }

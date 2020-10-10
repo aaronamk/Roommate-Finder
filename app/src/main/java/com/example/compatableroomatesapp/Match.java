@@ -31,7 +31,7 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
     private DatabaseReference reference;
 
-    private TextView fullName, personality, bio, quickFacts, emailView, back;
+    private TextView fullName, personality, bio, quickFacts, emailView, back, graduation;
     private Button logout, accept, reject;
     private ImageView profile;
     private StorageReference storageReference;
@@ -59,6 +59,7 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
         fullName = findViewById(R.id.fullName);
         personality = findViewById(R.id.personality);
         bio = findViewById(R.id.bio);
+        graduation = findViewById(R.id.graduation);
         quickFacts = findViewById(R.id.quick_facts);
         profile = findViewById(R.id.profile_pic);
         accept = findViewById(R.id.acceptButton);
@@ -100,18 +101,20 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                     if (userProfile.acceptedMatch && userAcceptedMatch){
                         fullName.setText(userProfile.fullName);
                         emailView.setText(userProfile.email);
-                        storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Glide.with(Match.this).load(uri).into(profile);
-                                }
+                        graduation.setText(userProfile.gradYear);
+                        //add photo to this as well
+                        storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl()
+                                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(Match.this).load(uri).into(profile);
+                            }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
                                 Toast.makeText(Match.this, "Match does not have a profile image", Toast.LENGTH_SHORT).show();
                             }
                         });
-
                     }
                     personality.setText(userProfile.personality);
                     bio.setText(userProfile.bio);
@@ -213,5 +216,4 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
         Intent intent = new Intent(Match.this, MainActivity.class);
         startActivity(intent);
     }
-
 }
