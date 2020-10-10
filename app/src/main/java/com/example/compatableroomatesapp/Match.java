@@ -153,6 +153,7 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                         User userProfile = snapshot.getValue(User.class);
                         if (userProfile != null && userProfile.acceptedMatch && userAcceptedMatch) {
                             Toast.makeText(Match.this, "Success! Email your new roommate!", Toast.LENGTH_LONG).show();
+                            findViewById(R.id.acceptButton).setVisibility(View.GONE);
                             fullName.setText(userProfile.fullName);
                             emailView.setText(userProfile.email);
                             storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
