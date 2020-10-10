@@ -103,11 +103,12 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                         emailView.setText(userProfile.email);
                         graduation.setText(userProfile.gradYear);
                         //add photo to this as well
-                        storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    Glide.with(Match.this).load(uri).into(profile);
-                                }
+                        storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl()
+                                        .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Glide.with(Match.this).load(uri).into(profile);
+                            }
                         }).addOnFailureListener(new OnFailureListener() {
                             @Override
                             public void onFailure(@NonNull Exception e) {
@@ -215,5 +216,4 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
         Intent intent = new Intent(Match.this, MainActivity.class);
         startActivity(intent);
     }
-
 }
