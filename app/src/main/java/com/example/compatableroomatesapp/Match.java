@@ -150,22 +150,20 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         User userProfile = snapshot.getValue(User.class);
-                        if (userProfile != null) {
-                            if (userProfile.acceptedMatch && userAcceptedMatch) {
-                                fullName.setText(userProfile.fullName);
-                                emailView.setText(userProfile.email);
-                                storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                    @Override
-                                    public void onSuccess(Uri uri) {
-                                        Glide.with(Match.this).load(uri).into(profile);
-                                    }
-                                }).addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Toast.makeText(Match.this, "Match does not have a profile image", Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
+                        if (userProfile != null && userProfile.acceptedMatch && userAcceptedMatch) {
+                            fullName.setText(userProfile.fullName);
+                            emailView.setText(userProfile.email);
+                            storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Glide.with(Match.this).load(uri).into(profile);
+                                }
+                            }).addOnFailureListener(new OnFailureListener() {
+                                @Override
+                                public void onFailure(@NonNull Exception e) {
+                                    Toast.makeText(Match.this, "Match does not have a profile image", Toast.LENGTH_SHORT).show();
+                                }
+                            });
                         }
                     }
                     @Override

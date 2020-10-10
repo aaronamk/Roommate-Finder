@@ -55,7 +55,7 @@ public class PersonalityTest extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
-                if(userProfile != null){
+                if (userProfile != null) {
                     personality.setText(userProfile.personality);
                 }
             }

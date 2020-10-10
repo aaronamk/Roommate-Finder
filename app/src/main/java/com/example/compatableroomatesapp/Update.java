@@ -52,15 +52,15 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
         storageReference = FirebaseStorage.getInstance().getReference();
         userID = user.getUid();
 
-        editFullName =  findViewById(R.id.editTextPersonName);
-        editGradYear =  findViewById(R.id.editTextGraduation);
+        editFullName = findViewById(R.id.editTextPersonName);
+        editGradYear = findViewById(R.id.editTextGraduation);
         editBio = findViewById(R.id.editTextBio);
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
-                if(userProfile != null){
+                if (userProfile != null) {
                     fullName = userProfile.fullName;
                     gradYear = userProfile.gradYear;
                     Bio = userProfile.bio;
@@ -69,7 +69,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
                     editGradYear.setText(gradYear);
                     editBio.setText(Bio);
                 }
-                if(user.getPhotoUrl() != null){
+                if (user.getPhotoUrl() != null) {
                     Glide.with(Update.this).load(user.getPhotoUrl()).into(profile);
                 }
             }
@@ -116,25 +116,25 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
         if(isNameChanged()) {
             changed = true;
         }
-        if(isGradYearChanged()){
+        if (isGradYearChanged()) {
             changed = true;
         }
-        if(isBioChanged()){
+        if (isBioChanged()) {
             changed = true;
         }
-        if(changed){
+        if (changed) {
             Toast.makeText(Update.this, "Profile updated!", Toast.LENGTH_SHORT).show();
-        }else{
+        } else {
             Toast.makeText(Update.this, "Profile is the same and can not be updated!", Toast.LENGTH_SHORT).show();
         }
     }
 
     private boolean isGradYearChanged() {
         String editYearString = editGradYear.getText().toString().trim();
-        if(!fullName.equals(editYearString)){
+        if (!fullName.equals(editYearString)) {
             reference.child(userID).child("gradYear").setValue(editGradYear.getText().toString().trim());
             return true;
-        }else{
+        } else {
             return false;
         }
 
@@ -142,25 +142,25 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
 
     private boolean isNameChanged() {
         String editNameString = editFullName.getText().toString().trim();
-        if(!fullName.equals(editNameString)){
-            if(editNameString.isEmpty()){
+        if (!fullName.equals(editNameString)) {
+            if (editNameString.isEmpty()) {
                 editFullName.setError("Full Name is required!");
                 editFullName.requestFocus();
                 return false;
             }
             reference.child(userID).child("fullName").setValue(editFullName.getText().toString().trim());
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     private boolean isBioChanged() {
         String editBioString = editBio.getText().toString().trim();
-        if(Bio == null || !Bio.equals(editBioString)){
+        if (Bio == null || !Bio.equals(editBioString)) {
             reference.child(userID).child("bio").setValue(editBio.getText().toString().trim());
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -168,7 +168,7 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 246 && resultCode == RESULT_OK && data != null){
+        if (requestCode == 246 && resultCode == RESULT_OK && data != null) {
             Uri imageUri = data.getData();
             profile.setImageURI(imageUri);
             uploadImage(imageUri);
@@ -214,5 +214,4 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
             }
         });
     }
-
 }
