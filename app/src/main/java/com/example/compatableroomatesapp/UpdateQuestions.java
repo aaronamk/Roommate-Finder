@@ -110,8 +110,7 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId())
-        {
+        switch (v.getId()) {
             case R.id.nextButton:
                 updateDatabase();
                 updatePersonality();
