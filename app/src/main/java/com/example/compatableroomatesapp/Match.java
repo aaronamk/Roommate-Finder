@@ -3,10 +3,8 @@ package com.example.compatableroomatesapp;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,11 +26,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 
 public class Match extends AppCompatActivity implements View.OnClickListener {
     private FirebaseUser user;
@@ -69,7 +62,6 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
         graduation = findViewById(R.id.graduation);
         quickFacts = findViewById(R.id.quick_facts);
         profile = findViewById(R.id.profile_pic);
-
         accept = findViewById(R.id.acceptButton);
         accept.setOnClickListener(this);
         reject = findViewById(R.id.rejectButton);
@@ -111,6 +103,17 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                         emailView.setText(userProfile.email);
                         graduation.setText(userProfile.gradYear);
                         //add photo to this as well
+                        storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    Glide.with(Match.this).load(uri).into(profile);
+                                }
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(Match.this, "Match does not have a profile image", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                     personality.setText(userProfile.personality);
                     bio.setText(userProfile.bio);
@@ -123,10 +126,6 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                     facts = facts.concat(userProfile.isSmoker ? "Smoker\n" : "Non-smoker\n");
                     facts = facts.concat(userProfile.isTidy ? "tidy\n" : "messy\n");
                     quickFacts.setText(facts);
-                }
-                if (user.getPhotoUrl() != null) {
-                    Glide.with(Match.this).load(user.getPhotoUrl()).into(profile);
-                    //TODO: make this draw the other user's profile pic... somehow. maybe store the url in the user profile class?
                 }
             }
 
@@ -154,7 +153,17 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                             if (userProfile.acceptedMatch && userAcceptedMatch) {
                                 fullName.setText(userProfile.fullName);
                                 emailView.setText(userProfile.email);
-                                //add photo to this as well
+                                storageReference.child("profileImage").child(profileUserID + ".jpeg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                    @Override
+                                    public void onSuccess(Uri uri) {
+                                        Glide.with(Match.this).load(uri).into(profile);
+                                    }
+                                }).addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Toast.makeText(Match.this, "Match does not have a profile image", Toast.LENGTH_SHORT).show();
+                                    }
+                                });
                             }
                         }
                     }
@@ -163,6 +172,7 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                         Toast.makeText(Match.this, "Something went wrong!", Toast.LENGTH_LONG).show();
                     }
                 });
+                Toast.makeText(Match.this, "Success! When match accepts you back, you will see more info.", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.rejectButton:
                 reference.child(userID).child("matched").setValue(false);
@@ -197,31 +207,6 @@ public class Match extends AppCompatActivity implements View.OnClickListener {
                 startActivity(backProf);
                 break;
         }
-    }
-
-    private void getDownloadUri(StorageReference file) {
-        file.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-            @Override
-            public void onSuccess(Uri uri) {
-                Toast.makeText(Match.this, "Uploading image.", Toast.LENGTH_LONG).show();
-                setUserProfileImage(uri);
-            }
-        });
-    }
-
-    private void setUserProfileImage(Uri uri) {
-        UserProfileChangeRequest request = new UserProfileChangeRequest.Builder().setPhotoUri(uri).build();
-        user.updateProfile(request).addOnSuccessListener(new OnSuccessListener<Void>() {
-            @Override
-            public void onSuccess(Void aVoid) {
-                Toast.makeText(Match.this, "Uploaded successful.", Toast.LENGTH_LONG).show();
-            }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(Match.this, "Uploaded failed.", Toast.LENGTH_LONG).show();
-            }
-        });
     }
 
     private void logoutUser() {

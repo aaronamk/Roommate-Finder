@@ -71,11 +71,6 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 morningPerson = isChecked;
-                if (isChecked) {
-                    Toast.makeText(getApplicationContext(), "You are a morning person", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "You are not a morning person", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
@@ -83,11 +78,6 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 playsMusic = isChecked;
-                if (isChecked) {
-                    Toast.makeText(getApplicationContext(), "You like to play music", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "You do not like to play music", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
@@ -95,11 +85,6 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isSmoker = isChecked;
-                if (isChecked) {
-                    Toast.makeText(getApplicationContext(), "You are a smoker", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "You are not a smoker", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
@@ -107,11 +92,6 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isVisited = isChecked;
-                if (isChecked) {
-                    Toast.makeText(getApplicationContext(), "You like to have friends over", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "You do not like to have friends over", Toast.LENGTH_SHORT).show();
-                }
             }
         });
 
@@ -119,11 +99,6 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 isTidy = isChecked;
-                if (isChecked) {
-                    Toast.makeText(getApplicationContext(), "You keep your room clean", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getApplicationContext(), "You do not keep your room clean", Toast.LENGTH_SHORT).show();
-                }
             }
         });
     }
