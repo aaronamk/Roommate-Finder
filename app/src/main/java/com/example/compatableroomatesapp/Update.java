@@ -87,12 +87,11 @@ public class Update extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.nextButton:
                 updateUser();
                 Intent intent = new Intent(Update.this, UpdateQuestions.class);
                 startActivity(intent);
-                //finish();
                 break;
             case R.id.logoutButton:
                 logoutUser();

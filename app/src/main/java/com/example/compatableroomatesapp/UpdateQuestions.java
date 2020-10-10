@@ -63,7 +63,7 @@ public class UpdateQuestions extends AppCompatActivity implements View.OnClickLi
             }
         });
 
-        nextButton = (Button) findViewById(R.id.nextButton);
+        nextButton = findViewById(R.id.nextButton);
         nextButton.setOnClickListener(this);
 
 

@@ -39,7 +39,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private DatabaseReference reference;
 
     private TextView fullName, personality, bio, quickFacts, graduation;
-    private Button request, logout, image, match;
+    private Button logout, image, match;
     private ImageButton edit;
     private ImageView profile;
     private StorageReference storageReference;
